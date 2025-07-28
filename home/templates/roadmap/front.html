@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Developer Roadmap</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: #2c3e50;
+            color: white;
+            border-radius: 8px;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        
+        h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
+        
+        .roadmap-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .phase {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .phase-title {
+            font-size: 1.5em;
+            color: #3498db;
+            margin-top: 0;
+        }
+        
+        .topics {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .topic {
+            background-color: #f0f8ff;
+            padding: 12px;
+            border-radius: 5px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .topic.advanced {
+            border-left-color: #e74c3c;
+        }
+        
+        .topic.intermediate {
+            border-left-color: #f39c12;
+        }
+        
+        .resources {
+            margin-top: 30px;
+            background-color: #eaf7fd;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .resources ul {
+            padding-left: 20px;
+        }
+        
+        .resources li {
+            margin-bottom: 8px;
+        }
+        
+        a {
+            color: #2980b9;
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+        
+        @media (max-width: 768px) {
+            .topics {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>HTML Developer Roadmap</h1>
+        <p>A comprehensive guide to becoming a proficient HTML developer</p>
+    </header>
+    
+    <div class="roadmap-container">
+        <section class="phase">
+            <h2 class="phase-title">Phase 1: HTML Fundamentals</h2>
+            <p>Master the core concepts of HTML that form the foundation of web development.</p>
+            
+            <div class="topics">
+                <div class="topic">
+                    <h3>HTML Document Structure</h3>
+                    <p>DOCTYPE, html, head, body, meta tags</p>
+                </div>
+                
+                <div class="topic">
+                    <h3>Text Elements</h3>
+                    <p>Headings, paragraphs, spans, lists, quotes</p>
+                </div>
+                
+                <div class="topic">
+                    <h3>Links & Navigation</h3>
+                    <p>Anchor tags, relative/absolute paths, fragments</p>
+                </div>
+                
+                <div class="topic">
+                    <h3>Images & Media</h3>
+                    <p>img, picture, figure, audio, video elements</p>
+                </div>
+                
+                <div class="topic">
+                    <h3>Tables</h3>
+                    <p>table, tr, td, th, caption, colspan/rowspan</p>
+                </div>
+                
+                <div class="topic">
+                    <h3>Forms & Input</h3>
+                    <p>form, input types, labels, buttons, validation</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="phase">
+            <h2 class="phase-title">Phase 2: Intermediate HTML</h2>
+            <p>Dive deeper into semantic HTML and modern features.</p>
+            
+            <div class="topics">
+                <div class="topic intermediate">
+                    <h3>Semantic HTML5</h3>
+                    <p>header, footer, article, section, nav, aside</p>
+                </div>
+                
+                <div class="topic intermediate">
+                    <h3>Accessibility (a11y)</h3>
+                    <p>ARIA roles, alt text, keyboard navigation</p>
+                </div>
+                
+                <div class="topic intermediate">
+                    <h3>Meta Tags & SEO</h3>
+                    <p>title, description, viewport, Open Graph</p>
+                </div>
+                
+                <div class="topic intermediate">
+                    <h3>Embedding Content</h3>
+                    <p>iframe, embed, object, SVG, canvas</p>
+                </div>
+                
+                <div class="topic intermediate">
+                    <h3>Data Attributes</h3>
+                    <p>Custom data-* attributes for JS interaction</p>
+                </div>
+                
+                <div class="topic intermediate">
+                    <h3>HTML APIs</h3>
+                    <p>Geolocation, Local Storage, Drag & Drop</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="phase">
+            <h2 class="phase-title">Phase 3: Advanced HTML</h2>
+            <p>Explore cutting-edge HTML features and best practices.</p>
+            
+            <div class="topics">
+                <div class="topic advanced">
+                    <h3>Web Components</h3>
+                    <p>Custom elements, Shadow DOM, templates</p>
+                </div>
+                
+                <div class="topic advanced">
+                    <h3>Progressive Web Apps</h3>
+                    <p>Manifest, service workers, offline capabilities</p>
+                </div>
+                
+                <div class="topic advanced">
+                    <h3>Microdata & Structured Data</h3>
+                    <p>Schema.org, rich snippets for SEO</p>
+                </div>
+                
+                <div class="topic advanced">
+                    <h3>Performance Optimization</h3>
+                    <p>Lazy loading, preloading, resource hints</p>
+                </div>
+                
+                <div class="topic advanced">
+                    <h3>Internationalization</h3>
+                    <p>lang attribute, RTL support, localization</p>
+                </div>
+                
+                <div class="topic advanced">
+                    <h3>Security Best Practices</h3>
+                    <p>CSP, sanitization, XSS prevention</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="phase">
+            <h2 class="phase-title">Phase 4: Complementary Technologies</h2>
+            <p>While focusing on HTML, these technologies are essential for modern web development.</p>
+            
+            <div class="topics">
+                <div class="topic">
+                    <h3>CSS Fundamentals</h3>
+                    <p>Selectors, box model, flexbox, grid</p>
+                </div>
+                
+                <div class="topic">
+                    <h3>Basic JavaScript</h3>
+                    <p>DOM manipulation, events, form handling</p>
+                </div>
+                
+                <div class="topic intermediate">
+                    <h3>Responsive Design</h3>
+                    <p>Media queries, viewport units, mobile-first</p>
+                </div>
+                
+                <div class="topic intermediate">
+                    <h3>CSS Frameworks</h3>
+                    <p>Bootstrap, Tailwind, Foundation</p>
+                </div>
+                
+                <div class="topic advanced">
+                    <h3>Build Tools</h3>
+                    <p>HTML templating, preprocessors, SSGs</p>
+                </div>
+                
+                <div class="topic advanced">
+                    <h3>Version Control</h3>
+                    <p>Git, GitHub, collaboration workflows</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="resources">
+            <h2>Learning Resources</h2>
+            <ul>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank">MDN HTML Documentation</a> - Comprehensive reference</li>
+                <li><a href="https://web.dev/learn/html/" target="_blank">web.dev HTML Course</a> - Modern HTML practices</li>
+                <li><a href="https://html.spec.whatwg.org/" target="_blank">HTML Living Standard</a> - Official specification</li>
+                <li><a href="https://www.w3schools.com/html/" target="_blank">W3Schools HTML Tutorial</a> - Beginner-friendly</li>
+                <li><a href="https://html5rocks.com/" target="_blank">HTML5 Rocks</a> - Advanced techniques</li>
+                <li><a href="https://frontendmasters.com/courses/" target="_blank">Frontend Masters</a> - In-depth courses</li>
+            </ul>
+        </section>
+    </div>
+    
+    <footer>
+        <p>HTML Developer Roadmap &copy; 2023 | Keep learning and building!</p>
+        <p>Remember: HTML is the foundation of the web. Master it well.</p>
+    </footer>
+</body>
+</html>

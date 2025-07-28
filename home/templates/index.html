@@ -1,0 +1,152 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soumya Deep Saha</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <style>
+        
+    </style>
+</head>
+
+<body>
+    <div class="scanlines"></div>
+    <canvas id="binaryRain" class="binary-rain"></canvas>
+
+    <div class="container">
+        <div class="corner-decoration corner-tl"></div>
+        <div class="corner-decoration corner-tr"></div>
+        <div class="corner-decoration corner-bl"></div>
+        <div class="corner-decoration corner-br"></div>
+
+        <div class="header">
+            <h1 class="name" id="name">SOUMYA DEEP SAHA</h1>
+            <h2 class="title" id="title">WEB DEVELOPER | SOFTWARE ENGINEER</h2>
+        </div>
+
+        <p class="tagline">Transforming ideas into immersive digital experiences through innovative code and creative
+            problem-solving</p>
+
+        <div class="contact">
+            <a href="mailto:deepadiotic@gmail.com"><i class="fas fa-envelope"></i> EMAIL</a>
+            <a href="www.linkedin.com/in/soumya-deep-saha-579a73222" target="_blank"><i class="fab fa-linkedin"></i> LINKEDIN</a>
+            <a href="home" target="_blank"><i class="fab fa-portfolio"></i> Portfolio</a>
+            <a href="https://github.com/SoumyaDeepSaha1200" target="_blank"><i class="fab fa-github"></i> GITHUB</a>
+            <a href="https://www.instagram.com/lens_.aur_.code/" target="_blank"><i class="fab fa-instagram"></i>Instagram</a>
+        </div>
+    </div>
+
+    <script>
+        // Binary Rain Animation
+        const canvas = document.getElementById('binaryRain');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const binary = '01';
+        const columns = Math.floor(canvas.width / 20);
+        const drops = [];
+
+        for (let i = 0; i < columns; i++) {
+            drops[i] = Math.floor(Math.random() * canvas.height);
+        }
+
+        function drawBinaryRain() {
+            ctx.fillStyle = 'rgba(10, 10, 18, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#0ff0fc';
+            ctx.font = '15px Rajdhani';
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = binary.charAt(Math.floor(Math.random() * binary.length));
+                ctx.fillText(text, i * 20, drops[i] * 20);
+
+                if (drops[i] * 20 > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+
+                drops[i]++;
+            }
+        }
+
+        setInterval(drawBinaryRain, 33);
+
+        // Typewriter Effect
+        const nameElement = document.getElementById('name');
+        const titleElement = document.getElementById('title');
+
+        const name = "SOUMYA DEEP SAHA";
+        const title = "WEB DEVELOPER | SOFTWARE ENGINEER";
+
+        nameElement.textContent = '';
+        titleElement.textContent = '';
+
+        let nameIndex = 0;
+        let titleIndex = 0;
+        let nameTyping = true;
+
+        function typeWriter() {
+            if (nameTyping) {
+                if (nameIndex < name.length) {
+                    nameElement.textContent += name.charAt(nameIndex);
+                    nameIndex++;
+                    setTimeout(typeWriter, 100 + Math.random() * 50);
+                } else {
+                    nameTyping = false;
+                    setTimeout(typeWriter, 500);
+                }
+            } else {
+                if (titleIndex < title.length) {
+                    titleElement.textContent += title.charAt(titleIndex);
+                    titleIndex++;
+                    setTimeout(typeWriter, 50);
+                }
+            }
+        }
+
+        setTimeout(typeWriter, 500);
+
+        // Glow effect on hover for name
+        nameElement.addEventListener('mouseover', () => {
+            nameElement.style.textShadow = `0 0 10px var(--neon-blue), 0 0 20px var(--neon-pink)`;
+        });
+
+        nameElement.addEventListener('mouseout', () => {
+            nameElement.style.textShadow = '0 0 10px var(--text-glow)';
+        });
+
+        // Portfolio button click effect
+        const portfolioBtn = document.getElementById('portfolioBtn');
+        portfolioBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            // Create ripple effect
+            const ripple = document.createElement('span');
+            ripple.classList.add('ripple');
+            portfolioBtn.appendChild(ripple);
+
+            // Remove ripple after animation
+            setTimeout(() => {
+                ripple.remove();
+            }, 1000);
+
+            // For demo purposes, just alert - replace with actual portfolio navigation
+            //alert("Portfolio section would load here! Replace this with your actual portfolio link or section.");
+        });
+
+        // Resize handler
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+
+</html>

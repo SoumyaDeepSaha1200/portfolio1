@@ -1,0 +1,105 @@
+.animated-navbar {
+  background: rgba(22, 12, 4, 0.85);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  padding: 15px 0;
+  border-bottom: 1px solid rgba(11, 4, 0, 0.3);
+  box-shadow: 0 2px 10px rgba(60, 30, 10, 0.2);
+}
+
+.animated-navbar.scrolled {
+  background: rgba(0, 0, 0, 0.95);
+  padding: 10px 0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.navbar-brand {
+  font-size: 1.8rem;
+  background: linear-gradient(90deg, #e1c807 0%, #feed00 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  transition: all 0.3s ease;
+}
+
+.nav-link {
+  position: relative;
+  margin: 0 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #0e0851 0%, #ffffff 100%);
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
+}
+.auth-buttons .btn {
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+}
+
+.auth-buttons .btn-outline-light:hover {
+  background: rgba(255, 10, 10, 0.1);
+}
+
+.auth-buttons .btn-primary {
+  background: linear-gradient(90deg, #0e0851 0%, #250118 100%);
+  border: none;
+}
+.user-profile img {
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.user-profile:hover img {
+  border-color: #ffffff;
+}
+
+.dropdown-menu {
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dropdown-item {
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #4facfe;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+  .navbar-collapse {
+    padding-top: 15px;
+  }
+
+  .auth-buttons,
+  .user-profile {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    width: 100%;
+  }
+
+  .auth-buttons .btn {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
