@@ -31,6 +31,10 @@ ALLOWED_HOSTS = ['portfolio1-3ld3.onrender.com']
 
 
 # Application definition
+CSRF_TRUSTED_ORIGINS = [
+    'https://portfolio1-3ld3.onrender.com',
+]
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
