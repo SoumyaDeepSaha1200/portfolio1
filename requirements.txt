@@ -1,0 +1,10 @@
+django
+djangorestframework
+pillow
+django-crispy-forms
+django-allauth
+django-debug-toolbar
+psycopg2-binary
+mysqlclient
+markdown
+python-decouple
