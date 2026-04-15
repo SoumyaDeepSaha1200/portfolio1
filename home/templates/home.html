@@ -189,7 +189,7 @@
 
       </div>
       <a href="{% static 'images/cv.pdf' %}" class="cv-button mt-3 mr-5 "
-        download="{% static 'images/cv.pdf' %}">Download CV</a>
+        download="{% static 'images/CV.pdf' %}">Download CV</a>
       <a href="codesence" class="cv-button mt-3 mr-5">S.D Web Services</a>
     </div>
   </div>
@@ -427,6 +427,7 @@
     <div class="filter-bar">
       <button class="filter-btn active" data-filter="all">All</button>
       <button class="filter-btn" data-filter="professional">Professional</button>
+      <button class="filter-btn" data-filter="nptel">NPTEL</button>
       <button class="filter-btn" data-filter="academic">Academic</button>
       <button class="filter-btn" data-filter="intern">Internships</button>
       <button class="filter-btn" data-filter="course">Courses</button>
@@ -446,8 +447,7 @@
       <div class="certificate-content">
           <h3 class="certificate-title fw-bold text-center">{{ certificate.name }}</h3>
           <span class="certificate-org">{{ certificate.institute }}</span>
-          <span class="certificate-date">Issued: {{ certificate.date }} · Expires: {{ certificate.date|add:"3 years"
-            }}</span>
+          <span class="certificate-date">Issued: {{ certificate.date }}</span>
           <p class="certificate-desc">{{ certificate.description }}</p>
           <div class="certificate-badges">
             <span class="badge bg-warning text-dark">{{ certificate.badge }}</span>
