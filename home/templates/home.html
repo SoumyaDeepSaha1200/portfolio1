@@ -91,8 +91,6 @@
 
   <!-- ********************************************************************************** -->
   <!-- Banner -->
-  <!-- ********************************************************************************** -->
-  <!-- Banner -->
   <div class="banner">
     <div class="left-content">
       <h1 class="animate-heading">Soumya Deep Saha</h1>
@@ -132,9 +130,9 @@
         // Typing Effect Script
         const texts = [
           "Software Engineer",
-          "Java Developer",
-          "Leader",
-          "Tech Enthusiast"
+          "Full-Stack Developer",
+          "AI & ML Enthusiast and Explorer",
+          "MERN Stack Developer",
         ];
         let count = 0;
         let index = 0;
@@ -173,16 +171,23 @@
       </script>
       <div class="social-icons">
         <a href="https://www.instagram.com/lens_.aur_.code/" target="_blank"><img
-            src="{% static 'images/Logos/instra.webp' %}" alt="HackerRank Icon" class="custom-icon" id="what" /></a>
+            src="{% static 'images/Logos/instra.webp' %}" alt="Instagram Icon" class="custom-icon" id="what" /></a>
+        
         <a href="https://www.linkedin.com/in/soumya-deep-saha-579a73222/" target="_blank"><img
-            src="{% static 'images/Logos/link.png' %}" alt="HackerRank Icon" class="custom-icon" id="what" /></a>
+            src="{% static 'images/Logos/link.png' %}" alt="LinkedIn Icon" class="custom-icon" id="what" /></a>
+        
         <a href="https://github.com/SoumyaDeepSaha1200" target="_blank"><img src="{% static 'images/Logos/git.jpeg' %}"
-            alt="HackerRank Icon" class="custom-icon" id="what" /></a>
+            alt="GitHub Icon" class="custom-icon" id="what" /></a>
+        
         <a href="https://www.hackerrank.com/profile/deepadiotic" target="_blank">
-          <img src="{% static 'images/Logos/hack.png' %}" alt="HackerRank Icon" class="custom-icon" id="what" />
-        </a>
+          <img src="{% static 'images/Logos/hack.png' %}" alt="HackerRank Icon" class="custom-icon" id="what" /></a>
+        
         <a href="https://www.facebook.com/profile.php?id=100010056245109" target="_blank"><img
-            src="{% static 'images/Logos/face.png' %}" alt="HackerRank Icon" class="custom-icon" id="what" /></a>
+            src="{% static 'images/Logos/face.png' %}" alt="Facebook Icon" class="custom-icon" id="what" /></a>
+        
+        <a href="https://leetcode.com/u/Soumya_deep_saha/" target="_blank"><img
+            src="https://cdn.iconscout.com/icon/free/png-256/free-leetcode-logo-icon-svg-download-png-2944960.png?f=webp" alt="Leetcode Icon" class="custom-icon" id="what" /></a>
+        
         <a href="https://wa.me/916291307445" target="_blank">
           <img src="{% static 'images/Logos/whates.jpg' %}" alt="WhatsApp Icon" class="custom-icon" id="what" />
         </a>
@@ -190,10 +195,9 @@
       </div>
       <a href="{% static 'images/cv.pdf' %}" class="cv-button mt-3 mr-5 "
         download="{% static 'images/CV.pdf' %}">Download CV</a>
-      <a href="codesence" class="cv-button mt-3 mr-5">S.D Web Services</a>
+      <a href="codesence" class="cv-button mt-3 mr-5">Web & App Services</a>
     </div>
   </div>
-  <!-- ********************************************************************************** -->
   <!-- ********************************************************************************** -->
   <!-- Banner -->
 
@@ -206,72 +210,73 @@
 
   <!-- ********************************************************************************** -->
   <!-- About -->
-  <div class="about-me-section" id="about">
+  <!-- ================= ABOUT ================= -->
+<section class="about-me-section" id="about">
+
+  <h2>About Me</h2>
+
+  <!-- Profile Image -->
+  <div class="about-img">
     {% for image in images %}
-    <img src="{% static image.static_path %}" alt="{{ image.alt_text }}" class="m-4">
+    <img src="{% static image.static_path %}" alt="{{ image.alt_text }}">
     {% endfor %}
-    <br>
-    <p class="bio-card">
-      <b class="fs-5 text-center text-white">Soumya Deep Saha</b><br>
-      <b class="fs-5 text-center text-white">MCA Student | Full-Stack Developer | AI & Web Enthusiast</b><br>
+  </div>
 
-      I am a passionate and ambitious tech enthusiast pursuing a <b>Master’s in Computer Applications (MCA)</b> at
-      <b>Techno International Newtown</b> with a strong foundation in Software Development, AI, Cloud Computing and Web
-      technologies and have
-      maintained a CGPA of 7.52 in my MCA program.<br><br>
+  <!-- Bio Card -->
+  <div class="bio-card">
 
-      I hold a<b> BCA Degree </b> from <b>Guru Nanak Institute of Technology </b>and have maintained a <b>CGPA of 7.97
-      </b> in my BCA program.<br>
+    <h3>Soumya Deep Saha</h3>
+    <h5>MCA Student | Full-Stack Developer | AI & Web Enthusiast</h5>
 
-      With expertise in <b>Java, C, Python, PHP, Django, AIML, Full-Stack Web Development</b>, I have hands-on
-      experience in
-      <b>Django, Node.js, SQL, and Front-End & Back-End technologies (HTML, CSS, JavaScript, and frameworks).</b> My
-      journey in Tech Includes multiple innovative projects, such as:<br><br>
-
-
-      <b>Quantam Secured 6G Network:</b> is a cutting-edge conversational AI assistant designed for healthcare queries.
-      Leveraging ultra-secure quantum encryption and 6G speed, it provides accurate, real-time medical information while
-      ensuring complete data privacy. Ideal for patients and professionals, it delivers reliable, instant responses on
-      symptoms, treatments, and wellness tips.<br>
-
-      <b>AI Medical Chatbot:</b> A conversational AI assistant for healthcare queries.<br>
-
-      <b>AI Tutor:</b> An intelligent tutoring system for personalized learning.<br>
-
-      <b>6G Network Research Paper:</b> Explored next-gen wireless communication technologies.<br>
-
-      <b>Cheating Detection System (Django):</b> AI-powered online exam monitoring.<br>
-
-      <b>Android Apps (Tic Tac Toe, Weather App, Programming App):</b> Developed during my Diploma in Android
-      Development<b>(Institute of Intellectual Information).</b><br>
-
-      <b>Dream Garden Banquet:</b> An elegant banquet website showcasing venue services, amenities, and booking options.
-      Features service showcase, gallery, modern UI/UX design, and responsive layout.<br>
-
-      <b>ICUBE Computer Sales and Services:</b> E-commerce website for computer products and services with product
-      listings and contact options.<br><br>
-
-      I have also completed three semesters specializing in <b>Advanced Java and Full-Stack Web Development,</b>
-      certified by
-      the Institute of Intellectual Information (ISO 9001:2015).<br>
-
-      Beyond development, I am keen on exploring <b>Docker, AWS, Machine Learning, and Artificial Intelligence</b> to
-      stay
-      ahead in the evolving tech landscape. My problem-solving mindset, adaptability, and eagerness to learn help me
-      thrive in dynamic environments.<br>
-
-      Let’s Connect!
-      I am eager to collaborate with professionals and organizations that drive innovation in technology.<br>
-
-      <b>📞 Phone:</b> +91 6291307445<br>
-      <b>📧 Email:</b> deepadiotic@gmail.com<br>
-      <b class>🌐 LinkedIn:</b> <a href="https://www.linkedin.com/in/soumya-deep-saha-579a73222/"
-        class="text-white text-decoration-none mb-5" target="_blank">Soumya Deep
-        Saha</a><br><br>
-      <!-- <a href="#contact" class="btn btn-warning text-dark w-25 fw-bold mt-5 mb-5" id="gettouch">Get in Touch</a> -->
+    <p>
+      I am a passionate and ambitious tech enthusiast pursuing a 
+      <b>Master’s in Computer Applications (MCA)</b> at 
+      <b>Techno International Newtown</b>, with a strong foundation in 
+      Software Development, AI, Cloud Computing and Web technologies.
     </p>
 
+    <p>
+      I have maintained a <b>CGPA of 7.52</b> in MCA and completed my 
+      <b>BCA from Guru Nanak Institute of Technology</b> with a 
+      <b>CGPA of 7.97</b>.
+    </p>
+
+    <p>
+      My technical expertise includes 
+      <b>Java, Python, C, PHP, Django, AIML and Full-Stack Development</b>, 
+      along with hands-on experience in 
+      <b>Node.js, SQL, HTML, CSS, JavaScript</b>.
+    </p>
+
+    <h4>Projects</h4>
+    <ul>
+      <li><b>Quantum Secured 6G Network</b> – Advanced AI healthcare system</li>
+      <li><b>AI Medical Chatbot</b> – Healthcare assistant</li>
+      <li><b>AI Tutor</b> – Personalized learning system</li>
+      <li><b>Cheating Detection System</b> – AI-based exam monitoring</li>
+      <li><b>Dream Garden Banquet</b> – Responsive website</li>
+      <li><b>ICUBE</b> – E-commerce platform</li>
+    </ul>
+
+    <p>
+      I am also exploring <b>Docker, AWS, Machine Learning and AI</b> to grow in modern tech domains.
+    </p>
+
+    <!-- Contact -->
+    <div class="about-contact">
+      <p><b>📞</b> 6291307445</p>
+      <p><b>📧</b> deepadiotic@gmail.com</p>
+      <p>
+        <b>🌐</b> 
+        <a href="https://www.linkedin.com/in/soumya-deep-saha-579a73222/" target="_blank">
+          LinkedIn Profile
+        </a>
+      </p>
+    </div>
+
   </div>
+
+</section>
   <!-- ********************************************************************************** -->
   <!-- About end -->
 
@@ -287,7 +292,7 @@
   <!-- ********************************************************************************** -->
   <header class="mt-5">
     <div class="container">
-      <h1>Our Services Web, Digital Marketing, Tution and Mores</h1>
+      <h1>My Services Web, Digital Marketing, Tution and Mores</h1>
       <p class="subtitle">Engage in practical coding projects that prepare you for real-world
         development.</p>
     </div>
