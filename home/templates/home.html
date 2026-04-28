@@ -9,7 +9,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
 
   <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon" />
-
   <!-- home css -->
   <link rel="stylesheet" href="{% static 'css/home.css' %}" />
   <!-- footer -->
@@ -327,6 +326,11 @@
 
 
 
+
+
+
+
+
   <!-- ********************************************************************************** -->
   <!-- Skills -->
   <header class="mt-5">
@@ -338,83 +342,142 @@
 
 
   <div class="skills-container mt-5" id="skills">
-    <div class="skill-item">
-      <div class="skill-info">
-        <span class="skill-name">Software Engineering</span>
-        <span class="skill-percent">95%</span>
-      </div>
-      <div class="progress-bar">
-        <div class="progress" style="width: 95%"></div>
-      </div>
-    </div>
 
-    <div class="skill-item">
-      <div class="skill-info">
-        <span class="skill-name">Front-End</span>
-        <span class="skill-percent">86%</span>
-      </div>
-      <div class="progress-bar">
-        <div class="progress" style="width: 86%"></div>
-      </div>
+  <div class="skill-item">
+    <div class="skill-info">
+      <span class="skill-name">Frontend Development (HTML, CSS, JS, Bootstrap, React)</span>
+      <span class="skill-percent">85%</span>
     </div>
-
-    <div class="skill-item">
-      <div class="skill-info">
-        <span class="skill-name">Back-End (Java, Python)</span>
-        <span class="skill-percent">56%</span>
-      </div>
-      <div class="progress-bar">
-        <div class="progress" style="width: 56%"></div>
-      </div>
-    </div>
-
-    <div class="skill-item">
-      <div class="skill-info">
-        <span class="skill-name">Database & SQL</span>
-        <span class="skill-percent">32%</span>
-      </div>
-      <div class="progress-bar">
-        <div class="progress" style="width: 32%"></div>
-      </div>
-    </div>
-
-    <div class="skill-item">
-      <div class="skill-info">
-        <span class="skill-name">MERN Stack (Laravel & AI Integration)</span>
-        <span class="skill-percent">20%</span>
-      </div>
-      <div class="progress-bar">
-        <div class="progress" style="width: 20%"></div>
-      </div>
-    </div>
-
-    <div class="skill-item">
-      <div class="skill-info">
-        <span class="skill-name">AI - ML - Data Science - Computer Vision - Deep Learning - Neural Network - GEN
-          AI</span>
-        <span class="skill-percent">25%</span>
-      </div>
-      <div class="progress-bar">
-        <div class="progress" style="width: 25%"></div>
-      </div>
-    </div>
-
-    <div class="skill-item">
-      <div class="skill-info">
-        <span class="skill-name">Cloud Computing - Devops</span>
-        <span class="skill-percent">25%</span>
-      </div>
-      <div class="progress-bar">
-        <div class="progress" style="width: 10%"></div>
-      </div>
+    <div class="progress-bar">
+      <div class="progress" style="width: 85%"></div>
     </div>
   </div>
+
+  <div class="skill-item">
+    <div class="skill-info">
+      <span class="skill-name">Backend Development (Java, Python, Django, Flask)</span>
+      <span class="skill-percent">70%</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress" style="width: 70%"></div>
+    </div>
+  </div>
+
+  <div class="skill-item">
+    <div class="skill-info">
+      <span class="skill-name">AI / Machine Learning / Data Science</span>
+      <span class="skill-percent">65%</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress" style="width: 65%"></div>
+    </div>
+  </div>
+
+  <div class="skill-item">
+    <div class="skill-info">
+      <span class="skill-name">Database & SQL</span>
+      <span class="skill-percent">65%</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress" style="width: 65%"></div>
+    </div>
+  </div>
+
+  <div class="skill-item">
+    <div class="skill-info">
+      <span class="skill-name">Cloud Computing & DevOps (Basics)</span>
+      <span class="skill-percent">40%</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress" style="width: 40%"></div>
+    </div>
+  </div>
+
+  <div class="skill-item">
+    <div class="skill-info">
+      <span class="skill-name">Tools & Technologies (Git, GitHub, Linux, VS Code)</span>
+      <span class="skill-percent">70%</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress" style="width: 70%"></div>
+    </div>
+  </div>
+
+</div>
   <!-- ********************************************************************************** -->
   <!-- Skills end -->
 
 
 
 
+
+
+
+  <!-- LeetCode -->
+<header class="mt-5">
+    <div class="container">
+      <h1>My LeetCode Dashboard</h1>
+      <p class="subtitle">Showcasing my Coding Skills</p>
+    </div>
+  </header>
+
+  <!-- ================= LEETCODE DASHBOARD ================= -->
+<section class="leetcode-section">
+
+  <div class="container text-center">
+    <h2 class="section-title">Coding Dashboard</h2>
+    <p class="section-subtitle">Track my problem-solving journey</p>
+  </div>
+
+  <div class="dashboard-container">
+
+    <!-- Profile Card -->
+    <div class="dashboard-card profile-card">
+      <h3>LeetCode Profile</h3>
+      <p class="username">@your_username</p>
+
+      <a href="https://leetcode.com/your_username" target="_blank" class="dashboard-btn">
+        Visit Profile →
+      </a>
+    </div>
+
+    <!-- Stats Card -->
+    <div class="dashboard-card stats-card">
+      <h3>Problem Solved</h3>
+
+      <div class="stats">
+        <div class="stat-item easy">
+          <span>Easy</span>
+          <b>120</b>
+        </div>
+
+        <div class="stat-item medium">
+          <span>Medium</span>
+          <b>80</b>
+        </div>
+
+        <div class="stat-item hard">
+          <span>Hard</span>
+          <b>20</b>
+        </div>
+      </div>
+    </div>
+
+    <!-- Progress Card -->
+    <div class="dashboard-card progress-card">
+      <h3>Consistency</h3>
+
+      <div class="progress-bar">
+        <div class="progress-fill" style="width: 75%"></div>
+      </div>
+
+      <p>75% Active Days</p>
+    </div>
+
+  </div>
+
+</section>
+<!-- LeetCode -->
 
 
 

@@ -313,49 +313,36 @@ font-weight: bold;
 /* ===============================
    SERVICES SECTION – MODERN UI
 ================================ */
-
-/* Header */
 header {
   text-align: center;
   padding: 40px 15px 10px;
 }
-
 header h1 {
   font-size: 2rem;
   font-weight: 700;
   color: #ffffff;
   margin-bottom: 10px;
 }
-
 header .subtitle {
-  font-size: 1rem;
+  font-size: 1.5rem !important;
   color: #ffffff;
   max-width: 700px;
   margin: auto;
 }
-
-/* Section */
 .coding-practice-section {
   padding: 20px 15px;
   background: #f9fafb00;
 }
-
 .coding-practice-container {
   max-width: 1800px;
   margin: auto;
 }
-
-
-/* Grid */
 .practice-projects-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 30px;
 }
-
-/* Card */
 .project-card {
-  
   background: #ffffff;
   border-radius: 18px;
   overflow: hidden;
@@ -365,19 +352,15 @@ header .subtitle {
 .project-image-container img{
   height: 100%;
 }
-
 .project-card:hover {
   transform: translateY(-12px);
   box-shadow: 0 25px 45px rgba(0, 0, 0, 0.15);
 }
-
-/* Image */
 .project-image-container {
   position: relative;
   height: 500px;
   overflow: hidden;
 }
-
 .project-image {
   width: 100%;
   height: 100%;
@@ -385,18 +368,14 @@ header .subtitle {
   transition: transform 0.6s ease;
 }
 
-.project-card:hover .project-image {
-  transform: scale(1.1);
-}
-
-/* Overlay */
+/* ================= OVERLAY ================= */
 .project-overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(0, 0, 0, 0.05),
-    rgba(0, 0, 0, 0.65)
+    rgba(0, 0, 0, 0.2),
+    rgba(0, 0, 0, 0.85)
   );
   opacity: 0;
   transition: opacity 0.4s ease;
@@ -405,53 +384,32 @@ header .subtitle {
 .project-card:hover .project-overlay {
   opacity: 1;
 }
-
-/* Content */
 .project-content {
   padding: 20px;
+  background: transparent;
 }
-
-.project-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin-bottom: 10px;
-  color: #111827;
-}
-
-.project-description {
-  font-size: 0.95rem;
-  color: #6b7280;
-  line-height: 1.6;
-}
-
-/* Footer */
 .project-footer {
   margin-top: 15px;
 }
-
 .project-link {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   font-weight: 600;
-  color: #2563eb;
+  color: #00a2ff !important;
   text-decoration: none;
-  transition: color 0.3s ease, transform 0.3s ease;
+  text-align: center !important;
+  transition: all 0.3s ease;
 }
-
 .project-link:hover {
-  color: #1e40af;
-  transform: translateX(5px);
+  color: #000000;
+  transform: translateX(6px);
 }
-
-.arrow-icon {
-  transition: transform 0.3s ease;
+.project-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 10px;
 }
-
-.project-link:hover .arrow-icon {
-  transform: translateX(4px);
-}
-
 /* ===============================
    RESPONSIVE BREAKPOINTS
 ================================ */
@@ -533,119 +491,152 @@ header .subtitle {
   color: #d1d5db;
 }
 
-/* Skills Container */
+/* ===============================
+   SKILLS CONTAINER (GRID + CLEAN)
+================================ */
+/* =======================================================
+   SKILLS SECTION (ULTIMATE PREMIUM UI)
+======================================================= */
+
+/* Container */
 .skills-container {
-  margin-bottom: 40px !important;
-  max-width: 1800px;
+  max-width: 1500px;
   margin: auto;
-  padding: 30px 20px;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  padding: 40px 20px;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
 }
 
-/* Skill Item */
+/* =======================================================
+   SKILL CARD (GLASS + NEON)
+======================================================= */
 .skill-item {
-  margin-bottom: 22px;
-  animation: fadeUp 0.8s ease both;
+  position: relative;
+  padding: 22px;
+  border-radius: 18px;
+
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(14px);
+
+  border: 1px solid rgba(255,255,255,0.08);
+
+  transition: all 0.4s ease;
+  overflow: hidden;
 }
 
-.skill-item:last-child {
-  margin-bottom: 0;
+/* Glow border animation */
+.skill-item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  background: linear-gradient(120deg, transparent, #00d9ff, transparent);
+  opacity: 0;
+  transition: 0.5s;
 }
 
-/* Skill Info */
+.skill-item:hover::before {
+  opacity: 0.4;
+}
+
+/* Hover lift */
+.skill-item:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 0 30px rgba(0, 217, 255, 0.35);
+}
+
+/* =======================================================
+   SKILL INFO
+======================================================= */
 .skill-info {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 
 .skill-name {
   font-size: 1rem;
   font-weight: 600;
-  color: #f9fafb;
+  color: #ffffff;
 }
 
 .skill-percent {
   font-size: 0.9rem;
   font-weight: 600;
-  color: #60a5fa;
+  color: #00d9ff;
 }
 
-/* Progress Bar */
+/* =======================================================
+   PROGRESS BAR (NEXT LEVEL)
+======================================================= */
 .progress-bar {
   width: 100%;
-  height: 12px;
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 20px;
+  height: 10px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 50px;
   overflow: hidden;
+  position: relative;
 }
 
+/* Animated progress */
 .progress {
   height: 100%;
-  border-radius: 20px;
+  border-radius: 50px;
+
   background: linear-gradient(
     90deg,
-    #2563eb,
-    #3b82f6,
-    #60a5fa
+    #00d9ff,
+    #0072ff,
+    #00d9ff
   );
-  animation: loadProgress 1.8s ease forwards;
+
+  background-size: 200% 100%;
+
+  animation: loadProgress 1.5s ease forwards,
+             gradientMove 4s linear infinite;
 }
 
-/* ===============================
+/* Shine effect */
+.progress::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 25px;
+  background: rgba(255,255,255,0.5);
+  filter: blur(10px);
+  opacity: 0.8;
+}
+
+/* =======================================================
    ANIMATIONS
-================================ */
+======================================================= */
 
+/* Load animation */
 @keyframes loadProgress {
-  from {
-    width: 0;
-  }
+  from { width: 0; }
 }
 
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(15px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* Moving gradient */
+@keyframes gradientMove {
+  0% { background-position: 0% }
+  100% { background-position: 200% }
 }
 
-/* ===============================
-   RESPONSIVE BREAKPOINTS
-================================ */
-
-/* Tablets */
-@media (max-width: 992px) {
+/* =======================================================
+   RESPONSIVE
+======================================================= */
+@media (max-width: 768px) {
   .skills-container {
-    max-width: 100%;
-    margin: 20px;
+    grid-template-columns: 1fr;
+    gap: 18px;
   }
 
-  header h1 {
-    font-size: 2rem;
-  }
-}
-
-/* Mobile */
-@media (max-width: 576px) {
-  header h1 {
-    font-size: 1.6rem;
-  }
-
-  header .subtitle {
-    font-size: 0.9rem;
-  }
-
-  .skills-container {
-    padding: 20px 15px;
-    border-radius: 16px;
+  .skill-item {
+    padding: 18px;
   }
 
   .skill-name {
@@ -654,10 +645,6 @@ header .subtitle {
 
   .skill-percent {
     font-size: 0.85rem;
-  }
-
-  .progress-bar {
-    height: 10px;
   }
 }
 /* ===============================
@@ -1321,122 +1308,75 @@ body {
 
 
 
-
-
-
-/* Universal title bar */
-/* ===== ULTIMATE UNIVERSAL TITLE BAR ===== */
-/* Premium Gradient Animations + Micro-Interactions */
+/* =======================================================
+   PREMIUM CLEAN HEADER (UPDATED)
+======================================================= */
 header {
-  --primary: #1a2980;  
-  --secondary: #26d0ce;
-  --glow-color: rgba(255, 255, 255, 0.15);
-  
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  --primary: #0f2027;
+  --secondary: #00d9ff;
+  background: linear-gradient(135deg, var(--primary), #203a43, var(--secondary));
   color: white;
-  padding: 25px 0;
+  padding: 80px 20px 50px;
   text-align: center;
-  margin-bottom: 50px;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  z-index: 1;
+  margin-bottom: 40px;
 }
 
-/* === DYNAMIC ANIMATED GRADIENT BACKGROUND === */
+/* ===== SOFT GLOW BACKGROUND ===== */
 header::before {
   content: '';
   position: absolute;
-  top: -10px;
-  left: -10px;
-  right: -10px;
-  bottom: -10px;
-  background: linear-gradient(
-    135deg, 
-    #1a2980, 
-    #064a29, 
-    #1f032c, 
-    #460242,
-    #1a2980
-  );
-  background-size: 300% 300%;
-  z-index: -1;
-  filter: blur(10px);
-  opacity: 0.8;
-  animation: GradientFlow 18s ease infinite;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(0,217,255,0.15), transparent 60%);
+  top: -50%;
+  left: -50%;
+  animation: glowMove 10s linear infinite;
+  z-index: 0;
 }
 
-/* === FLOATING PARTICLES EFFECT (OPTIONAL) === */
-header::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.05"><circle cx="20" cy="20" r="1.5" fill="white"/><circle cx="50" cy="50" r="1" fill="white"/><circle cx="80" cy="30" r="2" fill="white"/><circle cx="10" cy="70" r="1" fill="white"/><circle cx="90" cy="80" r="1.5" fill="white"/></svg>');
-  animation: ParticleMove 40s linear infinite;
-  z-index: -1;
+@keyframes glowMove {
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
-/* === TEXT STYLING WITH ANIMATIONS === */
+/* ===== CONTENT FIX ===== */
+header .container {
+  position: relative;
+  z-index: 2;
+}
+
+/* ===== TITLE ===== */
 header h1 {
-  font-size: 3.5rem;
-  margin: 0 auto 15px;
-  font-weight: 800;
-  letter-spacing: -0.5px;
-  text-shadow: 0 4px 20px var(--glow-color);
-  animation: FadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) both;
-  max-width: 90%;
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+
+  background: linear-gradient(90deg, #ffffff, #00d9ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  animation: fadeUp 1s ease;
 }
 
+/* ===== SUBTITLE ===== */
 .subtitle {
-  font-size: 1.4rem;
-  opacity: 0.9;
-  max-width: 700px;
-  margin: 0 auto;
-  font-weight: 300;
+  font-size: 1.1rem;
+  color: #cbd5f5;
+  max-width: 600px;
+  margin: auto;
   line-height: 1.6;
-  letter-spacing: 0.3px;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  animation: FadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 0.2s both;
+
+  animation: fadeUp 1s ease 0.2s both;
 }
 
-/* === PREMIUM COLOR SCHEMES (ADD CLASS TO HEADER) === */
-header.gradient-purple {
-  --primary: #8E2DE2;
-  --secondary: #4A00E0;
-}
-header.gradient-coral {
-  --primary: #FF416C;
-  --secondary: #FF4B2B;
-}
-header.gradient-emerald {
-  --primary: #11998e;
-  --secondary: #38ef7d;
-}
-header.gradient-sunset {
-  --primary: #f46b45;
-  --secondary: #eea849;
-}
-
-/* ==== KEYFRAME ANIMATIONS ==== */
-@keyframes GradientFlow {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-@keyframes ParticleMove {
-  0% { background-position: 0 0; }
-  100% { background-position: 100% 100%; }
-}
-
-@keyframes FadeInUp {
+/* ===== ANIMATION ===== */
+@keyframes fadeUp {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(25px);
   }
   to {
     opacity: 1;
@@ -1444,18 +1384,26 @@ header.gradient-sunset {
   }
 }
 
-/* === HOVER & INTERACTION EFFECTS === */
+/* ===== OPTIONAL VARIANTS ===== */
+header.gradient-blue {
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+}
 
-/* === RESPONSIVE ADJUSTMENTS === */
+header.gradient-dark {
+  background: linear-gradient(135deg, #000000, #1a1a2e);
+}
+
+/* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
   header {
-    padding: 70px 20px;
+    padding: 60px 15px 40px;
   }
+
   header h1 {
-    font-size: 2.5rem;
+    font-size: 2rem;
   }
+
   .subtitle {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
 }
-/* End here */
