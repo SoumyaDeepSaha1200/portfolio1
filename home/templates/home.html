@@ -1,1175 +1,1185 @@
-<!-- ====================================================================================================== -->
-<!-- ============================================== HTML HEAD SECTION ===================================== -->
-<!-- ====================================================================================================== -->
-
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <!-- ================= META TAGS ================= -->
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Soumya Deep Saha — Portfolio</title>
+  <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon"/>
 
-  <!-- ================= ANIMATION LIBRARY (GSAP) ================= -->
+  <!-- FONTS -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+
+  <!-- ICONS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
+
+  <!-- GSAP -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
 
-  <!-- ================= FAVICON ================= -->
-  <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon" />
+  <!-- BOOTSTRAP -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
 
-  <!-- ================= MAIN CSS ================= -->
-  <link rel="stylesheet" href="{% static 'css/home.css' %}" />
+  <style>
+  /* ═══════════════════════════════════════════
+     ROOT TOKENS
+  ═══════════════════════════════════════════ */
+  :root {
+    --bg:       #050810;
+    --bg2:      #090d19;
+    --surface:  rgba(255,255,255,0.035);
+    --border:   rgba(0,230,255,0.14);
+    --cyan:     #00e6ff;
+    --pink:     #ff2d78;
+    --gold:     #ffd700;
+    --green:    #22c55e;
+    --text:     #dde6f0;
+    --muted:    rgba(255,255,255,0.38);
+    --font-display: 'Orbitron', monospace;
+    --font-ui:      'Syne', sans-serif;
+    --font-mono:    'JetBrains Mono', monospace;
+    --r: 16px;
+  }
 
-  <!-- ================= FOOTER CSS ================= -->
-  <link rel="stylesheet" href="{% static 'css/common/fot.css' %}">
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-ui);
+    overflow-x: hidden;
+    font-size: 15px;
+    line-height: 1.7;
+  }
 
-  <!-- ================= NAVBAR CSS ================= -->
-  <link rel="stylesheet" href="{% static 'css/common/nav.css' %}">
+  /* ── GLOBAL BG EFFECTS ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 15% 10%, rgba(0,180,255,0.07), transparent),
+      radial-gradient(ellipse 60% 50% at 85% 80%, rgba(255,45,120,0.05), transparent);
+    pointer-events: none;
+  }
+  .noise {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  }
+  .scanlines {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background: repeating-linear-gradient(to bottom, transparent 0, transparent 3px, rgba(0,0,0,0.1) 3px, rgba(0,0,0,0.1) 4px);
+  }
+  canvas#rain { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.3; }
 
-  <!-- ================= ICON LIBRARY ================= -->
-  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  /* ── HUD GRID ── */
+  .hud-grid {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image: linear-gradient(rgba(0,230,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(0,230,255,0.025) 1px, transparent 1px);
+    background-size: 80px 80px;
+  }
 
-  <!-- ================= BOOTSTRAP ================= -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  /* ── CURSOR ── */
+  #cur-dot, #cur-ring { position: fixed; border-radius: 50%; pointer-events: none; z-index: 9999; }
+  #cur-dot  { width:7px; height:7px; background: var(--cyan); box-shadow: 0 0 12px var(--cyan); transform: translate(-50%,-50%); }
+  #cur-ring { width:34px; height:34px; border: 1px solid rgba(0,230,255,0.5); transform: translate(-50%,-50%); transition: width .3s, height .3s, border-color .3s; }
 
-  <!-- ================= SECONDARY FAVICON ================= -->
-  <link rel="shortcut icon" href="{% static 'images/logo.png' %}" type="image/x-icon">
+  /* ── SECTION WRAPPER ── */
+  section, .sect { position: relative; z-index: 2; padding: 100px 0; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 28px; }
 
-  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  /* ── SECTION HEADING ── */
+  .sect-head { text-align: center; margin-bottom: 70px; }
+  .sect-eyebrow {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--cyan); border: 1px solid rgba(0,230,255,0.25);
+    border-radius: 100px; padding: 5px 18px; margin-bottom: 18px;
+  }
+  .sect-title {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 900; letter-spacing: -0.01em;
+    background: linear-gradient(135deg, #fff 40%, var(--cyan));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .sect-sub { color: var(--muted); font-size: 15px; max-width: 540px; margin: 14px auto 0; }
 
-  <!-- ================= PAGE TITLE ================= -->
-  <title>Soumya Deep Saha</title>
+  /* ── GLASS CARD ── */
+  .glass {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    backdrop-filter: blur(14px);
+    transition: transform .35s, box-shadow .35s, border-color .35s;
+  }
+  .glass:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    border-color: rgba(0,230,255,0.3);
+  }
+
+  /* ══════════════════════════════════════════
+     NAVBAR
+  ══════════════════════════════════════════ */
+  .nav-main {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 0 28px;
+    border-bottom: 1px solid transparent;
+    transition: background .4s, border-color .4s, padding .4s;
+  }
+  .nav-main.scrolled {
+    background: rgba(5,8,16,0.88);
+    backdrop-filter: blur(20px);
+    border-color: var(--border);
+    padding: 0 28px;
+  }
+  .nav-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 68px;
+  }
+  .nav-brand {
+    font-family: var(--font-display);
+    font-size: 16px; font-weight: 900; letter-spacing: 0.08em;
+    color: var(--cyan); text-decoration: none;
+    text-shadow: 0 0 20px rgba(0,230,255,0.5);
+  }
+  .nav-links { display: flex; align-items: center; gap: 4px; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-mono); font-size: 11px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted); text-decoration: none;
+    padding: 8px 14px; border-radius: 6px;
+    transition: color .25s, background .25s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--cyan); background: rgba(0,230,255,0.07); }
+  .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; }
+  .nav-toggle span { display: block; width: 24px; height: 2px; background: var(--text); border-radius: 2px; transition: .3s; }
+
+  @media (max-width: 900px) {
+    .nav-toggle { display: flex; }
+    .nav-links {
+      display: none; flex-direction: column; gap: 0;
+      position: absolute; top: 68px; left: 0; right: 0;
+      background: rgba(5,8,16,0.97); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border); padding: 16px;
+    }
+    .nav-links.open { display: flex; }
+    .nav-links a { padding: 12px 20px; font-size: 12px; }
+  }
+
+  /* ══════════════════════════════════════════
+     BANNER / HERO
+  ══════════════════════════════════════════ */
+  .banner {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center;
+    padding: 120px 28px 80px;
+    position: relative; z-index: 2;
+  }
+  .banner-inner { max-width: 900px; width: 100%; }
+
+  .banner-status {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.15em;
+    color: var(--muted); border: 1px solid var(--border);
+    background: rgba(5,8,16,0.6); padding: 7px 20px; border-radius: 100px;
+    margin-bottom: 36px;
+    animation: fadeUp .6s ease both;
+  }
+  .status-dot { width:7px; height:7px; border-radius:50%; background:var(--cyan); box-shadow:0 0 8px var(--cyan); animation: blink 1.5s infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
+
+  .banner h1 {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 7vw, 88px);
+    font-weight: 900; letter-spacing: 0.04em;
+    line-height: 1.0;
+    background: linear-gradient(135deg, #fff 0%, var(--cyan) 50%, #fff 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    animation: fadeUp .7s ease .1s both, textShine 5s linear infinite;
+    min-height: 1.1em;
+  }
+  @keyframes textShine { to { background-position: 200% center; } }
+
+  .banner-role {
+    display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px;
+    margin: 24px 0 20px;
+    animation: fadeUp .7s ease .25s both;
+  }
+  .role-pill {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 6px 18px; border-radius: 100px;
+    border: 1px solid rgba(0,230,255,0.3); color: var(--cyan);
+    background: rgba(0,230,255,0.06);
+  }
+  .role-pill.alt { border-color: rgba(255,45,120,0.3); color: var(--pink); background: rgba(255,45,120,0.06); }
+  .role-sep { color: var(--muted); }
+
+  .typing-wrap {
+    font-size: clamp(15px, 2.5vw, 22px);
+    color: var(--muted); margin-bottom: 40px;
+    animation: fadeUp .7s ease .35s both;
+  }
+  .typing-wrap strong { color: var(--text); }
+  #typing-effect { color: var(--gold); font-family: var(--font-mono); }
+
+  /* Social row */
+  .social-row {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
+    margin-bottom: 36px;
+    animation: fadeUp .7s ease .45s both;
+  }
+  .soc-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted); text-decoration: none;
+    border: 1px solid var(--border); border-radius: 8px;
+    padding: 9px 16px;
+    background: var(--surface);
+    transition: all .25s;
+  }
+  .soc-btn:hover { color: var(--cyan); border-color: rgba(0,230,255,0.4); background: rgba(0,230,255,0.07); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
+  .soc-btn i { font-size: 15px; }
+
+  /* CTA buttons */
+  .cta-row {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 14px;
+    animation: fadeUp .7s ease .55s both;
+  }
+  .btn-primary-cyber, .btn-ghost-cyber {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 14px 32px; border-radius: 8px; text-decoration: none;
+    font-weight: 600; transition: all .3s cubic-bezier(0.22,1,.36,1);
+    position: relative; overflow: hidden;
+  }
+  .btn-primary-cyber {
+    background: linear-gradient(135deg, var(--cyan), #0072ff);
+    color: #000; border: none;
+    box-shadow: 0 0 24px rgba(0,230,255,0.3);
+  }
+  .btn-primary-cyber:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,230,255,0.45); color: #000; }
+  .btn-ghost-cyber {
+    background: transparent; color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn-ghost-cyber:hover { border-color: var(--cyan); color: var(--cyan); background: rgba(0,230,255,0.05); transform: translateY(-3px); }
+
+  @keyframes fadeUp { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
+
+  /* ══════════════════════════════════════════
+     ABOUT
+  ══════════════════════════════════════════ */
+  .about-grid { display: grid; grid-template-columns: 280px 1fr; gap: 50px; align-items: start; }
+  @media(max-width:900px){ .about-grid{grid-template-columns:1fr;} }
+
+  .about-photo-wrap { display: flex; flex-direction: column; align-items: center; gap: 20px; }
+  .about-photo {
+    width: 220px; height: 220px; border-radius: 50%;
+    border: 3px solid rgba(0,230,255,0.4);
+    box-shadow: 0 0 40px rgba(0,230,255,0.2), inset 0 0 30px rgba(0,0,0,0.4);
+    object-fit: cover;
+    transition: box-shadow .4s, transform .4s;
+  }
+  .about-photo:hover { transform: scale(1.04); box-shadow: 0 0 60px rgba(0,230,255,0.5); }
+
+  .about-quick { width: 100%; display: flex; flex-direction: column; gap: 10px; }
+  .about-stat {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 16px; border-radius: 10px;
+    background: var(--surface); border: 1px solid var(--border);
+    font-family: var(--font-mono); font-size: 12px;
+  }
+  .about-stat .key { color: var(--muted); }
+  .about-stat .val { color: var(--cyan); font-weight: 600; }
+
+  .about-card { padding: 36px; }
+  .about-card h3 { font-family: var(--font-display); font-size: 26px; font-weight: 900; margin-bottom: 6px; }
+  .about-card h5 { color: var(--cyan); font-size: 13px; font-family: var(--font-mono); letter-spacing: 0.08em; margin-bottom: 22px; }
+  .about-card p { color: var(--muted); margin-bottom: 14px; font-size: 14.5px; }
+  .about-card h4 { font-family: var(--font-ui); font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text); margin: 20px 0 10px; }
+  .about-card ul { padding-left: 0; list-style: none; display: flex; flex-direction: column; gap: 7px; }
+  .about-card ul li { font-size: 14px; color: var(--muted); display: flex; gap: 10px; align-items: baseline; }
+  .about-card ul li::before { content: '▸'; color: var(--cyan); flex-shrink: 0; }
+  .about-contact-row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--border); }
+  .contact-chip {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em;
+    color: var(--muted); text-decoration: none;
+    border: 1px solid var(--border); border-radius: 100px; padding: 6px 14px;
+    background: var(--surface); transition: all .25s;
+  }
+  .contact-chip:hover { color: var(--cyan); border-color: rgba(0,230,255,0.4); }
+
+  /* ══════════════════════════════════════════
+     SERVICES
+  ══════════════════════════════════════════ */
+  .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+  .service-card { border-radius: var(--r); overflow: hidden; }
+  .service-img-wrap { height: 240px; overflow: hidden; position: relative; background: var(--bg2); }
+  .service-img-wrap img { width:100%; height:100%; object-fit:cover; transition: transform .6s ease; filter:brightness(.7); }
+  .service-card:hover .service-img-wrap img { transform: scale(1.08); }
+  .service-img-wrap::after { content:''; position:absolute; inset:0; background:linear-gradient(to top, var(--bg2) 0%, transparent 60%); }
+  .service-body { padding: 22px 24px; }
+  .service-body h3 { font-family:var(--font-ui); font-size:18px; font-weight:700; margin-bottom:8px; }
+  .service-body p { color:var(--muted); font-size:13.5px; margin-bottom:14px; }
+  .service-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--cyan); text-decoration: none; transition: gap .25s;
+  }
+  .service-link:hover { gap: 10px; }
+
+  /* ══════════════════════════════════════════
+     SKILLS
+  ══════════════════════════════════════════ */
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+  .skill-item { padding: 26px; border-radius: var(--r); }
+  .skill-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
+  .skill-name { font-size:14px; font-weight:600; }
+  .skill-pct { font-family:var(--font-mono); font-size:13px; color:var(--cyan); font-weight:700; }
+  .skill-bar { height:8px; border-radius:100px; background:rgba(255,255,255,0.07); overflow:hidden; }
+  .skill-fill {
+    height:100%; border-radius:100px; width:0;
+    transition: width 1.4s cubic-bezier(0.22,1,.36,1);
+    position: relative;
+  }
+  .skill-fill::after { content:''; position:absolute; right:0; top:0; bottom:0; width:20px; background:rgba(255,255,255,0.5); filter:blur(6px); }
+  /* colors per skill */
+  .sf-1{background:linear-gradient(90deg,#00ffcc,#00e6ff);}
+  .sf-2{background:linear-gradient(90deg,#4facfe,#00f2fe);}
+  .sf-3{background:linear-gradient(90deg,#43e97b,#38f9d7);}
+  .sf-4{background:linear-gradient(90deg,#fa709a,#fee140);}
+  .sf-5{background:linear-gradient(90deg,#f7971e,#ffd200);}
+  .sf-6{background:linear-gradient(90deg,#7f00ff,#e100ff);}
+
+  /* ══════════════════════════════════════════
+     LEETCODE DASHBOARD
+  ══════════════════════════════════════════ */
+  .lc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media(max-width:768px){ .lc-grid{grid-template-columns:1fr;} }
+
+  .lc-card { padding: 30px; border-radius: var(--r); }
+  .lc-card h3 { font-family:var(--font-ui); font-size:17px; font-weight:700; margin-bottom:6px; }
+  .lc-username { font-family:var(--font-mono); font-size:13px; color:var(--cyan); margin-bottom:20px; display:block; }
+  .lc-btn {
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--font-mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase;
+    background:var(--green); color:#000; padding:10px 22px; border-radius:100px;
+    font-weight:700; text-decoration:none; transition:all .25s;
+    box-shadow: 0 0 20px rgba(34,197,94,0.3);
+  }
+  .lc-btn:hover { transform:translateY(-2px); box-shadow:0 8px 30px rgba(34,197,94,0.5); color:#000; }
+  .lc-stats { display:flex; gap:10px; margin-top:10px; }
+  .lc-stat { flex:1; padding:14px 10px; border-radius:10px; text-align:center; }
+  .lc-stat span { display:block; font-size:10px; font-family:var(--font-mono); letter-spacing:.08em; margin-bottom:6px; opacity:.8; }
+  .lc-stat b { font-size:26px; font-family:var(--font-display); font-weight:900; }
+  .lc-easy{background:rgba(34,197,94,.15); border:1px solid rgba(34,197,94,.3); color:#22c55e;}
+  .lc-med {background:rgba(234,179,8,.15);  border:1px solid rgba(234,179,8,.3);  color:#eab308;}
+  .lc-hard{background:rgba(239,68,68,.15);  border:1px solid rgba(239,68,68,.3);  color:#ef4444;}
+  .lc-bar-wrap { margin-top:20px; }
+  .lc-bar { height:10px; background:rgba(255,255,255,.07); border-radius:100px; overflow:hidden; margin-top:12px; }
+  .lc-fill { height:100%; width:0; background:linear-gradient(90deg,var(--cyan),var(--green)); transition:width 1.5s cubic-bezier(.22,1,.36,1); border-radius:100px; }
+  .lc-pct { font-family:var(--font-mono); font-size:13px; color:var(--cyan); margin-top:10px; display:block; }
+
+  /* ══════════════════════════════════════════
+     CERTIFICATES
+  ══════════════════════════════════════════ */
+  .filter-row { display:flex; flex-wrap:wrap; justify-content:center; gap:8px; margin-bottom:40px; }
+  .f-btn {
+    font-family:var(--font-mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase;
+    border: 1px solid var(--border); background: var(--surface); color: var(--muted);
+    padding: 8px 18px; border-radius:100px; cursor:pointer; transition:all .25s;
+  }
+  .f-btn:hover, .f-btn.active { background:var(--cyan); color:#000; border-color:transparent; box-shadow:0 0 16px rgba(0,230,255,.4); }
+
+  .certs-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:22px; }
+  .cert-card { border-radius:var(--r); overflow:hidden; }
+  .cert-img-wrap { height:180px; overflow:hidden; }
+  .cert-img-wrap img { width:100%; height:100%; object-fit:cover; transition:transform .6s; cursor:pointer; }
+  .cert-card:hover .cert-img-wrap img { transform:scale(1.06); }
+  .cert-body { padding:20px 22px; }
+  .cert-body h3 { font-size:15px; font-weight:700; margin-bottom:4px; }
+  .cert-org { font-family:var(--font-mono); font-size:11px; color:var(--muted); display:block; margin-bottom:3px; }
+  .cert-date { font-size:11px; color:rgba(255,255,255,.25); display:block; margin-bottom:10px; }
+  .cert-desc { font-size:13px; color:var(--muted); margin-bottom:12px; }
+  .cert-tags { display:flex; gap:6px; flex-wrap:wrap; }
+  .cert-tag { font-size:10px; letter-spacing:.08em; font-family:var(--font-mono); padding:3px 10px; border-radius:100px; background:rgba(0,230,255,.08); border:1px solid rgba(0,230,255,.2); color:var(--cyan); }
+
+  .show-more-btn {
+    display:block; margin:40px auto 0;
+    font-family:var(--font-mono); font-size:12px; letter-spacing:.12em; text-transform:uppercase;
+    background:transparent; border:1px solid var(--border); color:var(--text);
+    padding:12px 32px; border-radius:100px; cursor:pointer; transition:all .25s;
+  }
+  .show-more-btn:hover { border-color:var(--cyan); color:var(--cyan); background:rgba(0,230,255,.05); }
+
+  /* Image lightbox */
+  .lightbox { display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,.92); backdrop-filter:blur(12px); align-items:center; justify-content:center; }
+  .lightbox.on { display:flex; }
+  .lightbox img { max-width:90%; max-height:90%; border-radius:10px; box-shadow:0 20px 60px rgba(0,0,0,.8); animation:zoomIn .3s ease; }
+  .lb-close { position:absolute; top:20px; right:28px; font-size:36px; color:#fff; cursor:pointer; transition:.3s; }
+  .lb-close:hover { color:var(--cyan); transform:scale(1.2); }
+  @keyframes zoomIn { from{opacity:0;transform:scale(.7)} to{opacity:1;transform:scale(1)} }
+
+  /* ══════════════════════════════════════════
+     PROJECTS
+  ══════════════════════════════════════════ */
+  .projects-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(260px,1fr)); gap:22px; }
+  .proj-card { border-radius:var(--r); overflow:hidden; }
+  .proj-img-wrap { height:180px; overflow:hidden; position:relative; }
+  .proj-img-wrap img { width:100%; height:100%; object-fit:cover; transition:transform .5s; }
+  .proj-card:hover .proj-img-wrap img { transform:scale(1.08); }
+  .proj-body { padding:20px 22px; text-align:center; }
+  .proj-body h5 { font-size:16px; font-weight:700; margin-bottom:14px; }
+  .proj-btn {
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--font-mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase;
+    background:linear-gradient(135deg,#00c6ff,#0072ff); color:#fff;
+    padding:9px 22px; border-radius:100px; text-decoration:none; transition:all .25s;
+    box-shadow:0 4px 16px rgba(0,198,255,.3);
+  }
+  .proj-btn:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(0,198,255,.5); color:#fff; }
+
+  /* Bootstrap modal dark override */
+  .modal-content { background:#0a0f1e; border:1px solid var(--border); border-radius:var(--r); color:var(--text); }
+  .modal-header { border-bottom:1px solid var(--border); }
+  .modal-title { color:var(--cyan); font-family:var(--font-ui); font-weight:700; }
+  .btn-close { filter:invert(1); }
+  .proj-modal-card {
+    background:var(--surface); border:1px solid var(--border); border-radius:12px; overflow:hidden;
+    transition:transform .3s, box-shadow .3s; text-decoration:none; color:var(--text);
+    display:block;
+  }
+  .proj-modal-card:hover { transform:translateY(-5px); box-shadow:0 12px 30px rgba(0,230,255,.2); color:var(--text); }
+  .proj-modal-card img { width:100%; height:130px; object-fit:cover; }
+  .proj-modal-card p { padding:12px; font-size:13px; font-weight:700; text-align:center; }
+
+  /* ══════════════════════════════════════════
+     BLOG
+  ══════════════════════════════════════════ */
+  .blog-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(260px,1fr)); gap:22px; }
+  .blog-card { border-radius:var(--r); overflow:hidden; }
+  .blog-img-wrap { height:180px; overflow:hidden; }
+  .blog-img-wrap img { width:100%; height:100%; object-fit:cover; transition:transform .5s; }
+  .blog-card:hover .blog-img-wrap img { transform:scale(1.08); }
+  .blog-body { padding:20px 22px; }
+  .blog-body h5 { font-size:15px; font-weight:700; margin-bottom:8px; }
+  .blog-date { font-family:var(--font-mono); font-size:11px; color:var(--muted); display:block; margin-bottom:8px; }
+  .blog-desc { font-size:13.5px; color:var(--muted); margin-bottom:16px; }
+  .blog-btn {
+    font-family:var(--font-mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--cyan); text-decoration:none; transition:all .25s;
+    display:inline-flex; align-items:center; gap:6px;
+  }
+  .blog-btn:hover { gap:10px; }
+
+  /* ══════════════════════════════════════════
+     CONTACT
+  ══════════════════════════════════════════ */
+  .contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start; }
+  @media(max-width:768px){ .contact-grid{grid-template-columns:1fr;} }
+
+  .contact-form-wrap { padding:36px; border-radius:var(--r); }
+  .form-group { margin-bottom:20px; }
+  .form-group label { display:block; font-family:var(--font-mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin-bottom:8px; }
+  .cyber-input {
+    width:100%; padding:13px 16px;
+    background:rgba(255,255,255,.04); border:1px solid var(--border); border-radius:10px;
+    color:var(--text); font-family:var(--font-ui); font-size:14px;
+    transition:border-color .25s, box-shadow .25s; outline:none;
+  }
+  .cyber-input:focus { border-color:var(--cyan); box-shadow:0 0 16px rgba(0,230,255,.2); }
+  .cyber-input::placeholder { color:rgba(255,255,255,.2); }
+
+  .contact-info-wrap { display:flex; flex-direction:column; gap:16px; }
+  .cinfo-card {
+    display:flex; align-items:center; gap:16px;
+    padding:18px 20px; border-radius:12px;
+    background:var(--surface); border:1px solid var(--border);
+    transition:all .3s;
+  }
+  .cinfo-card:hover { border-color:rgba(0,230,255,.3); transform:translateY(-4px); box-shadow:0 12px 30px rgba(0,0,0,.4); }
+  .cinfo-icon { width:42px; height:42px; border-radius:10px; background:rgba(0,230,255,.08); border:1px solid rgba(0,230,255,.15); display:flex; align-items:center; justify-content:center; font-size:18px; color:var(--cyan); flex-shrink:0; }
+  .cinfo-text { font-size:14px; color:var(--muted); word-break:break-all; }
+
+  /* ── FOOTER ── */
+  .footer {
+    position:relative; z-index:2;
+    border-top:1px solid var(--border);
+    padding:32px 28px;
+    text-align:center;
+    font-family:var(--font-mono); font-size:11px;
+    color:rgba(255,255,255,.2);
+    letter-spacing:.15em;
+  }
+  .footer span { color:rgba(0,230,255,.4); }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal { opacity:0; transform:translateY(30px); }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width:5px; }
+  ::-webkit-scrollbar-track { background:var(--bg); }
+  ::-webkit-scrollbar-thumb { background:rgba(0,230,255,.2); border-radius:10px; }
+  ::-webkit-scrollbar-thumb:hover { background:rgba(0,230,255,.4); }
+
+  /* ── RESPONSIVE PADDING ── */
+  @media(max-width:600px) {
+    section, .sect { padding:70px 0; }
+    .banner { padding: 100px 20px 60px; }
+    .about-card { padding:24px; }
+    .contact-form-wrap { padding:24px; }
+  }
+  </style>
 </head>
 
-<!-- ====================================================================================================== -->
-<!-- ========================================== END HTML HEAD SECTION ===================================== -->
-<!-- ====================================================================================================== -->
-
-
-
 <body>
-<!-- ====================================================================================================== -->
-<!-- ============================================== NAVBAR SECTION ======================================== -->
-<!-- ====================================================================================================== -->
 
-<!-- ================= FIXED ANIMATED NAVIGATION BAR ================= -->
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top animated-navbar">
-  <div class="container">
+<!-- LAYERS -->
+<canvas id="rain"></canvas>
+<div class="noise"></div>
+<div class="scanlines"></div>
+<div class="hud-grid"></div>
 
-    <!-- ================= BRAND / LOGO ================= -->
-    <a class="navbar-brand fw-bold" href="#">Portfolio</a>
+<!-- CURSOR -->
+<div id="cur-dot"></div>
+<div id="cur-ring"></div>
 
-    <!-- ================= TOGGLER BUTTON (MOBILE) ================= -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <span class="lb-close" id="lbClose">&times;</span>
+  <img id="lbImg" src="" alt=""/>
+</div>
 
-    <!-- ================= NAV LINKS ================= -->
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav me-auto">
-
-        <li class="nav-item">
-          <a class="nav-link active fw-bold" href="#home">Home</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="#about">About</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="#services">Services</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="#skills">Skills</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="#achieve">Achieve</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="#project">Project</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="#blogs">Blog</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="codesence">Code Sence</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="studiio">Photo Studio</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="#contact">Contact</a>
-        </li>
-
-      </ul>
-
-      <!-- ================= RIGHT SIDE (AUTH / PROFILE) ================= -->
-      <div class="d-flex align-items-center">
-
-        <!-- ================= AUTH BUTTONS (COMMENTED) ================= -->
-        <!--
-        <div class="auth-buttons" id="authButtons">
-          <button class="btn btn-outline-light me-2 btn-sm">
-            <a href="login" class="text-white text-decoration-none fw-bold">Login</a>
-          </button>
-          <button class="btn btn-primary btn-sm">
-            <a href="signup" class="text-white text-decoration-none fw-bold">Register</a>
-          </button>
-        </div>
-        -->
-
-        <!-- ================= USER PROFILE DROPDOWN (COMMENTED) ================= -->
-        <!--
-        <div class="dropdown user-profile" id="userProfile" style="display: none;">
-          <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
-            id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="https://via.placeholder.com/40" alt="Profile" width="40" height="40"
-              class="rounded-circle me-2">
-            <span class="d-none d-lg-inline">Username</span>
-          </a>
-
-          <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="dropdownUser">
-            <li><a class="dropdown-item" href="#">My Profile</a></li>
-            <li><a class="dropdown-item" href="#">Settings</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Logout</a></li>
-          </ul>
-        </div>
-        -->
-
-      </div>
+<!-- ══════════════════════════════════════════
+     NAVBAR
+══════════════════════════════════════════ -->
+<nav class="nav-main" id="navbar">
+  <div class="nav-inner">
+    <a href="#" class="nav-brand">SDS_DEV</a>
+    <div class="nav-toggle" id="navToggle">
+      <span></span><span></span><span></span>
     </div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home"     class="active">Home</a></li>
+      <li><a href="#about"   >About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#skills"  >Skills</a></li>
+      <li><a href="#leetcode">LeetCode</a></li>
+      <li><a href="#certs"   >Certs</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#blogs"   >Blog</a></li>
+      <li><a href="codesence">Code Sence</a></li>
+      <li><a href="studiio"  >Studio</a></li>
+      <li><a href="#contact" >Contact</a></li>
+    </ul>
   </div>
 </nav>
 
-<!-- ================= BOOTSTRAP JS ================= -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- ══════════════════════════════════════════
+     BANNER
+══════════════════════════════════════════ -->
+<section class="banner" id="home">
+  <div class="banner-inner">
+    <div class="banner-status">
+      <div class="status-dot"></div>
+      <span id="liveTime">00:00:00</span>
+      &nbsp;·&nbsp; BHĀTPĀRA, WB, IN &nbsp;·&nbsp; OPEN TO WORK
+    </div>
 
-<!-- ================= END NAVBAR ================= -->
+    <h1 id="bannerName"></h1>
 
-<!-- ====================================================================================================== -->
-<!-- ============================================ END NAVBAR SECTION ====================================== -->
-<!-- ====================================================================================================== -->
+    <div class="banner-role">
+      <span class="role-pill">Web Developer</span>
+      <span class="role-sep">◈</span>
+      <span class="role-pill alt">Software Engineer</span>
+      <span class="role-sep">◈</span>
+      <span class="role-pill">MCA Student</span>
+    </div>
 
-
-
-
-
-
-<!-- ====================================================================================================== -->
-<!-- ============================================== BANNER SECTION ======================================== -->
-<!-- ====================================================================================================== -->
-
-<!-- ================= BANNER ================= -->
-<div class="banner">
-
-  <div class="left-content">
-
-    <!-- ================= HEADING ================= -->
-    <h1 class="animate-heading">Soumya Deep Saha</h1>
-
-    <!-- ================= TYPING TEXT ================= -->
-    <p>
-      <span class="fw-bold">I am a-></span>
+    <p class="typing-wrap">
+      <strong>I am a →</strong>&nbsp;
       <span id="typing-effect"></span>
     </p>
 
-    <!-- ================= ANIMATION & TYPING SCRIPT ================= -->
-    <script>
-      // GSAP Animation Script
-      document.addEventListener('DOMContentLoaded', function () {
-
-        // Heading animation
-        gsap.from('.animate-heading', {
-          duration: 1,
-          y: -50,
-          opacity: 0,
-          ease: 'power2.out'
-        });
-
-        // Social icons animation
-        gsap.from('.social-icons a', {
-          duration: 0.8,
-          x: -30,
-          opacity: 0,
-          stagger: 0.1,
-          delay: 0.5,
-          ease: 'back.out'
-        });
-
-        // Button animation
-        gsap.from('.cv-button', {
-          duration: 0.8,
-          y: 20,
-          ease: 'back.out(1.7)',
-          stagger: 0.1
-        });
-
-      });
-
-      // ================= TYPING EFFECT =================
-      const texts = [
-        "Software Engineer",
-        "Full-Stack Web Developer",
-        "AI & ML Enthusiast and Explorer",
-        "MERN Stack Developer",
-        "Tech Blogger and Content Creator",
-        "Photography Enthusiast",
-      ];
-
-      let count = 0;
-      let index = 0;
-      let currentText = "";
-      let letter = "";
-      let isDeleting = false;
-
-      (function type() {
-
-        if (count === texts.length) {
-          count = 0;
-        }
-
-        currentText = texts[count];
-
-        if (isDeleting) {
-          letter = currentText.substring(0, index - 1);
-          index--;
-        } else {
-          letter = currentText.substring(0, index + 1);
-          index++;
-        }
-
-        document.getElementById("typing-effect").textContent = letter + " |";
-
-        let typeSpeed = 100;
-
-        if (isDeleting) {
-          typeSpeed /= 2;
-        }
-
-        if (!isDeleting && letter === currentText) {
-          typeSpeed = 2000; // pause at end
-          isDeleting = true;
-        } else if (isDeleting && letter === "") {
-          isDeleting = false;
-          count++;
-          typeSpeed = 500;
-        }
-
-        setTimeout(type, typeSpeed);
-
-      })();
-    </script>
-
-    <!-- ================= SOCIAL ICONS ================= -->
-    <div class="social-icons">
-
-      <a href="https://www.instagram.com/lens_.aur_.code/" target="_blank">
-        <img src="{% static 'images/Logos/instra.webp' %}" alt="Instagram Icon" class="custom-icon" id="what" />
-      </a>
-
-      <a href="https://www.linkedin.com/in/soumya-deep-saha-579a73222/" target="_blank">
-        <img src="{% static 'images/Logos/link.png' %}" alt="LinkedIn Icon" class="custom-icon" id="what" />
-      </a>
-
-      <a href="https://github.com/SoumyaDeepSaha1200" target="_blank">
-        <img src="{% static 'images/Logos/git.jpeg' %}" alt="GitHub Icon" class="custom-icon" id="what" />
-      </a>
-
-      <a href="https://www.hackerrank.com/profile/deepadiotic" target="_blank">
-        <img src="{% static 'images/Logos/hack.png' %}" alt="HackerRank Icon" class="custom-icon" id="what" />
-      </a>
-
-      <a href="https://www.facebook.com/profile.php?id=100010056245109" target="_blank">
-        <img src="{% static 'images/Logos/face.png' %}" alt="Facebook Icon" class="custom-icon" id="what" />
-      </a>
-
-      <a href="https://leetcode.com/u/Soumya_deep_saha/" target="_blank">
-        <img src="https://cdn.iconscout.com/icon/free/png-256/free-leetcode-logo-icon-svg-download-png-2944960.png?f=webp"
-          alt="Leetcode Icon" class="custom-icon" id="what" />
-      </a>
-
-      <a href="https://wa.me/916291307445" target="_blank">
-        <img src="{% static 'images/Logos/whates.jpg' %}" alt="WhatsApp Icon" class="custom-icon" id="what" />
-      </a>
-
+    <div class="social-row">
+      <a href="https://www.instagram.com/lens_.aur_.code/" target="_blank" class="soc-btn"><i class="fab fa-instagram"></i>Instagram</a>
+      <a href="https://www.linkedin.com/in/soumya-deep-saha-579a73222/" target="_blank" class="soc-btn"><i class="fab fa-linkedin"></i>LinkedIn</a>
+      <a href="https://github.com/SoumyaDeepSaha1200" target="_blank" class="soc-btn"><i class="fab fa-github"></i>GitHub</a>
+      <a href="https://www.hackerrank.com/profile/deepadiotic" target="_blank" class="soc-btn"><i class="fab fa-hackerrank"></i>HackerRank</a>
+      <a href="https://leetcode.com/u/Soumya_deep_saha/" target="_blank" class="soc-btn"><i class="fas fa-code"></i>LeetCode</a>
+      <a href="https://wa.me/916291307445" target="_blank" class="soc-btn"><i class="fab fa-whatsapp"></i>WhatsApp</a>
     </div>
 
-    <!-- ================= ACTION BUTTONS ================= -->
-    <a href="{% static 'images/cv.pdf' %}" class="cv-button mt-3 mr-5"
-      download="{% static 'images/CV.pdf' %}">
-      Download CV
-    </a>
-
-    <a href="codesence" class="cv-button mt-3 mr-5">
-      Get Price Quote
-    </a>
-
-  </div>
-
-</div>
-<!-- ================= END BANNER ================= -->
-
-<!-- ====================================================================================================== -->
-<!-- ============================================ END BANNER SECTION ====================================== -->
-<!-- ====================================================================================================== -->
-
-
-
-
-
-
-<!-- ====================================================================================================== -->
-<!-- ============================================== ABOUT SECTION ========================================= -->
-<!-- ====================================================================================================== -->
-
-<!-- ================= ABOUT ================= -->
-<section class="about-me-section" id="about">
-
-  <!-- ================= SECTION TITLE ================= -->
-  <h2>About Me</h2>
-
-  <!-- ================= PROFILE IMAGE ================= -->
-  <div class="about-img">
-    {% for image in images %}
-      <img src="{% static image.static_path %}" alt="{{ image.alt_text }}">
-    {% endfor %}
-  </div>
-
-  <!-- ================= BIO CARD ================= -->
-  <div class="bio-card">
-
-    <!-- ================= NAME & ROLE ================= -->
-    <h3>Soumya Deep Saha</h3>
-    <h5>MCA Student | Full-Stack Developer | AI & Web Enthusiast</h5>
-
-    <!-- ================= INTRO ================= -->
-    <p>
-      I am a passionate and ambitious tech enthusiast pursuing a 
-      <b>Master’s in Computer Applications (MCA)</b> at 
-      <b>Techno International Newtown</b>, with a strong foundation in 
-      Software Development, AI, Cloud Computing and Web technologies.
-    </p>
-
-    <!-- ================= EDUCATION ================= -->
-    <p>
-      I have maintained a <b>CGPA of 7.52</b> in MCA and completed my 
-      <b>BCA from Guru Nanak Institute of Technology</b> with a 
-      <b>CGPA of 7.97</b>.
-    </p>
-
-    <!-- ================= SKILLS SUMMARY ================= -->
-    <p>
-      My technical expertise includes 
-      <b>Java, Python, C, PHP, Django, AIML and Full-Stack Development</b>, 
-      along with hands-on experience in 
-      <b>Node.js, SQL, HTML, CSS, JavaScript</b>.
-    </p>
-
-    <!-- ================= PROJECTS ================= -->
-    <h4>Projects</h4>
-    <ul>
-      <li><b>Quantum Secured 6G Network</b> – Advanced AI healthcare system</li>
-      <li><b>AI Medical Chatbot</b> – Healthcare assistant</li>
-      <li><b>AI Tutor</b> – Personalized learning system</li>
-      <li><b>Cheating Detection System</b> – AI-based exam monitoring</li>
-      <li><b>Dream Garden Banquet</b> – Responsive website</li>
-      <li><b>ICUBE</b> – E-commerce platform</li>
-    </ul>
-
-    <!-- ================= FUTURE LEARNING ================= -->
-    <p>
-      I am also exploring <b>Docker, AWS, Machine Learning and AI</b> to grow in modern tech domains.
-    </p>
-
-    <!-- ================= CONTACT DETAILS ================= -->
-    <div class="about-contact">
-      <p><b>📞</b> 6291307445</p>
-      <p><b>📧</b> deepadiotic@gmail.com</p>
-
-      <p>
-        <b>🌐</b> 
-        <a href="https://www.linkedin.com/in/soumya-deep-saha-579a73222/" target="_blank">
-          LinkedIn Profile
-        </a>
-      </p>
+    <div class="cta-row">
+      <a href="{% static 'images/cv.pdf' %}" class="btn-primary-cyber" download><i class="fas fa-download"></i>Download CV</a>
+      <a href="codesence" class="btn-ghost-cyber"><i class="fas fa-tag"></i>Get Price Quote</a>
     </div>
   </div>
-
 </section>
-<!-- ================= END ABOUT ================= -->
 
-<!-- ====================================================================================================== -->
-<!-- =========================================== END ABOUT SECTION ========================================= -->
-<!-- ====================================================================================================== -->
-
-
-
-
-
-<!-- ********************************************************************************** -->
-<!-- SERVICES START -->
-<!-- ********************************************************************************** -->
-
-<header class="mt-5">
+<!-- ══════════════════════════════════════════
+     ABOUT
+══════════════════════════════════════════ -->
+<section id="about">
   <div class="container">
-    <h1>My Services Web, Digital Marketing, Tution and Mores</h1>
-    <p class="subtitle">Engage in practical coding projects that prepare you for real-world
-      development.</p>
+    <div class="sect-head reveal">
+      <div class="sect-eyebrow">Who I Am</div>
+      <h2 class="sect-title">About Me</h2>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-photo-wrap reveal">
+        {% for image in images %}
+        <img src="{% static image.static_path %}" alt="{{ image.alt_text }}" class="about-photo"/>
+        {% endfor %}
+        <div class="about-quick glass" style="padding:0">
+          <div class="about-stat"><span class="key">CGPA — MCA</span><span class="val">7.52</span></div>
+          <div class="about-stat"><span class="key">CGPA — BCA</span><span class="val">7.97</span></div>
+          <div class="about-stat"><span class="key">University</span><span class="val">TIN</span></div>
+          <div class="about-stat"><span class="key">Status</span><span class="val" style="color:var(--green)">Available ✓</span></div>
+        </div>
+      </div>
+
+      <div class="about-card glass reveal">
+        <h3>Soumya Deep Saha</h3>
+        <h5>MCA Student · Full-Stack Developer · AI & Web Enthusiast</h5>
+
+        <p>A passionate and ambitious tech enthusiast pursuing a <b style="color:var(--text)">Master's in Computer Applications (MCA)</b> at <b style="color:var(--text)">Techno International Newtown</b>, with a strong foundation in Software Development, AI, Cloud Computing and Web technologies.</p>
+        <p>Completed <b style="color:var(--text)">BCA from Guru Nanak Institute of Technology</b>. My expertise spans <b style="color:var(--text)">Java, Python, C, PHP, Django, AIML and Full-Stack Development</b>, with hands-on experience in Node.js, SQL, HTML, CSS, JavaScript.</p>
+        <p>Also exploring <b style="color:var(--text)">Docker, AWS, Machine Learning and AI</b> to grow in modern tech domains.</p>
+
+        <h4>Notable Projects</h4>
+        <ul>
+          <li>Quantum Secured 6G Network — Advanced AI healthcare system</li>
+          <li>AI Medical Chatbot — Healthcare assistant</li>
+          <li>AI Tutor — Personalized learning system</li>
+          <li>Cheating Detection System — AI-based exam monitoring</li>
+          <li>Dream Garden Banquet — Responsive website</li>
+          <li>ICUBE — E-commerce platform</li>
+        </ul>
+
+        <div class="about-contact-row">
+          <a href="tel:+916291307445" class="contact-chip"><i class="fas fa-phone"></i> +91 6291307445</a>
+          <a href="mailto:deepadiotic@gmail.com" class="contact-chip"><i class="fas fa-envelope"></i> deepadiotic@gmail.com</a>
+          <a href="https://www.linkedin.com/in/soumya-deep-saha-579a73222/" target="_blank" class="contact-chip"><i class="fab fa-linkedin"></i> LinkedIn</a>
+        </div>
+      </div>
+    </div>
   </div>
-</header>
+</section>
 
-<section class="coding-practice-section" id="services">
-  <div class="coding-practice-container">
-    <div class="practice-projects-grid">
+<!-- ══════════════════════════════════════════
+     SERVICES
+══════════════════════════════════════════ -->
+<section id="services">
+  <div class="container">
+    <div class="sect-head reveal">
+      <div class="sect-eyebrow">What I Offer</div>
+      <h2 class="sect-title">My Services</h2>
+      <p class="sect-sub">Web, digital marketing, tutoring and more — practical solutions for real-world needs.</p>
+    </div>
+    <div class="services-grid">
       {% for card in cards %}
-      <article class="project-card">
-        <div class="project-image-container">
-          <img src="{% static card.service_path %}" alt="{{ card.alt_text }}" class="project-image">
-          <div class="project-overlay"></div>
+      <div class="service-card glass reveal">
+        <div class="service-img-wrap">
+          <img src="{% static card.service_path %}" alt="{{ card.alt_text }}"/>
         </div>
-
-        <div class="project-content">
-          <h3 class="project-title">{{ card.title }}</h3>
-          <p class="project-description">{{ card.description }}</p>
-
-          <div class="project-footer">
-            <a href="{{ card.link }}" class="project-link" data-bs-toggle="modal" data-bs-target="{{ card.link }}">
-              Explore Project <span class="arrow-icon">→</span>
-            </a>
-          </div>
+        <div class="service-body">
+          <h3>{{ card.title }}</h3>
+          <p>{{ card.description }}</p>
+          <a href="{% url 'codesence' %}" class="service-link">
+  Explore <i class="fas fa-arrow-right"></i>
+</a>
         </div>
-      </article>
+      </div>
       {% endfor %}
     </div>
   </div>
 </section>
 
-<!-- ********************************************************************************** -->
-<!-- SERVICES END -->
-<!-- ********************************************************************************** -->
-
-
-
-
-
-
-
-
-
-
-<!-- ********************************************************************************** -->
-<!-- SKILLS START -->
-<!-- ********************************************************************************** -->
-
-<header class="mt-5">
+<!-- ══════════════════════════════════════════
+     SKILLS
+══════════════════════════════════════════ -->
+<section id="skills">
   <div class="container">
-    <h1>My Skills</h1>
-    <p class="subtitle">Showcasing my professional and academic achievements</p>
-  </div>
-</header>
-
-<div class="skills-container mt-5" id="skills">
-
-  <div class="skill-item">
-    <div class="skill-info">
-      <span class="skill-name">Frontend Development (HTML, CSS, JS, Bootstrap, React)</span>
-      <span class="skill-percent">85%</span>
+    <div class="sect-head reveal">
+      <div class="sect-eyebrow">Technical Proficiency</div>
+      <h2 class="sect-title">My Skills</h2>
     </div>
-    <div class="progress-bar">
-      <div class="progress" style="width: 85%"></div>
-    </div>
-  </div>
-
-  <div class="skill-item">
-    <div class="skill-info">
-      <span class="skill-name">Backend Development (Java, Python, Django, Flask)</span>
-      <span class="skill-percent">70%</span>
-    </div>
-    <div class="progress-bar">
-      <div class="progress" style="width: 70%"></div>
-    </div>
-  </div>
-
-  <div class="skill-item">
-    <div class="skill-info">
-      <span class="skill-name">AI / Machine Learning / Data Science</span>
-      <span class="skill-percent">65%</span>
-    </div>
-    <div class="progress-bar">
-      <div class="progress" style="width: 65%"></div>
-    </div>
-  </div>
-
-  <div class="skill-item">
-    <div class="skill-info">
-      <span class="skill-name">Database & SQL</span>
-      <span class="skill-percent">65%</span>
-    </div>
-    <div class="progress-bar">
-      <div class="progress" style="width: 65%"></div>
-    </div>
-  </div>
-
-  <div class="skill-item">
-    <div class="skill-info">
-      <span class="skill-name">Cloud Computing & DevOps (Basics)</span>
-      <span class="skill-percent">40%</span>
-    </div>
-    <div class="progress-bar">
-      <div class="progress" style="width: 40%"></div>
-    </div>
-  </div>
-
-  <div class="skill-item">
-    <div class="skill-info">
-      <span class="skill-name">Tools & Technologies (Git, GitHub, Linux, VS Code)</span>
-      <span class="skill-percent">70%</span>
-    </div>
-    <div class="progress-bar">
-      <div class="progress" style="width: 70%"></div>
-    </div>
-  </div>
-
-</div>
-
-<!-- ********************************************************************************** -->
-<!-- SKILLS END -->
-<!-- ********************************************************************************** -->
-
-
-
-
-
-<!-- ********************************************************************************** -->
-<!-- LEETCODE DASHBOARD START -->
-<!-- ********************************************************************************** -->
-
-<!-- ================= LEETCODE DASHBOARD ================= -->
-
-<header class="mt-5">
-  <div class="container">
-    <h1>My LeetCode Dashboard</h1>
-    <p class="subtitle">Showcasing my Coding Skills</p>
-  </div>
-</header>
-
-<section class="leetcode-section">
-
-  <div class="dashboard-container">
-
-    <!-- Profile Card -->
-    <div class="dashboard-card profile-card">
-      <h3>LeetCode Profile</h3>
-      <p class="username">@Soumya_deep_saha</p>
-
-      <a href="https://leetcode.com/u/Soumya_deep_saha/" target="_blank" class="dashboard-btn">
-        Visit Profile →
-      </a>
-    </div>
-
-    <!-- Stats Card -->
-    <div class="dashboard-card stats-card">
-      <h3>Problem Solved</h3>
-
-      <div class="stats">
-        <div class="stat-item easy">
-          <span>Easy</span>
-          <b id="easy-count">0</b>
-        </div>
-
-        <div class="stat-item medium">
-          <span>Medium</span>
-          <b id="medium-count">0</b>
-        </div>
-
-        <div class="stat-item hard">
-          <span>Hard</span>
-          <b id="hard-count">0</b>
-        </div>
+    <div class="skills-grid">
+      <div class="skill-item glass reveal">
+        <div class="skill-top"><span class="skill-name">Frontend Dev (HTML, CSS, JS, Bootstrap, React)</span><span class="skill-pct">85%</span></div>
+        <div class="skill-bar"><div class="skill-fill sf-1" data-w="85"></div></div>
+      </div>
+      <div class="skill-item glass reveal">
+        <div class="skill-top"><span class="skill-name">Backend Dev (Java, Python, Django, Flask)</span><span class="skill-pct">70%</span></div>
+        <div class="skill-bar"><div class="skill-fill sf-2" data-w="70"></div></div>
+      </div>
+      <div class="skill-item glass reveal">
+        <div class="skill-top"><span class="skill-name">AI / Machine Learning / Data Science</span><span class="skill-pct">65%</span></div>
+        <div class="skill-bar"><div class="skill-fill sf-3" data-w="65"></div></div>
+      </div>
+      <div class="skill-item glass reveal">
+        <div class="skill-top"><span class="skill-name">Database & SQL</span><span class="skill-pct">65%</span></div>
+        <div class="skill-bar"><div class="skill-fill sf-4" data-w="65"></div></div>
+      </div>
+      <div class="skill-item glass reveal">
+        <div class="skill-top"><span class="skill-name">Cloud Computing & DevOps (Basics)</span><span class="skill-pct">40%</span></div>
+        <div class="skill-bar"><div class="skill-fill sf-5" data-w="40"></div></div>
+      </div>
+      <div class="skill-item glass reveal">
+        <div class="skill-top"><span class="skill-name">Tools & Tech (Git, GitHub, Linux, VS Code)</span><span class="skill-pct">70%</span></div>
+        <div class="skill-bar"><div class="skill-fill sf-6" data-w="70"></div></div>
       </div>
     </div>
-
-    <!-- Progress Card -->
-    <div class="dashboard-card progress-card">
-      <h3>Consistency</h3>
-
-      <div class="progress-bar">
-        <div class="progress-fill" id="progress-fill"></div>
-      </div>
-
-      <p id="progress-text">Loading...</p>
-    </div>
-
   </div>
-
 </section>
 
-<script>
-async function fetchLeetCodeStats() {
-  try {
-    const res = await fetch("https://leetcode-api-faisalshohag.vercel.app/Soumya_deep_saha");
-    const data = await res.json();
-
-    document.getElementById("easy-count").innerText = data.easySolved;
-    document.getElementById("medium-count").innerText = data.mediumSolved;
-    document.getElementById("hard-count").innerText = data.hardSolved;
-
-    const totalSolved = data.totalSolved;
-    const totalQuestions = data.totalQuestions;
-
-    const percentage = Math.round((totalSolved / totalQuestions) * 100);
-
-    document.getElementById("progress-fill").style.width = percentage + "%";
-    document.getElementById("progress-text").innerText = percentage + "% Completed";
-
-  } catch (error) {
-    document.getElementById("progress-text").innerText = "Unable to load data";
-    console.error(error);
-  }
-}
-
-fetchLeetCodeStats();
-</script>
-
-<!-- ********************************************************************************** -->
-<!-- LEETCODE DASHBOARD END -->
-<!-- ********************************************************************************** -->
-
-
-
-
-
-
-
-
-
-<!-- ********************************************************************************** -->
-<!-- ACHIEVEMENTS / CERTIFICATES START -->
-<!-- ********************************************************************************** -->
-<!-- IMAGE MODAL -->
- <script>
-document.addEventListener("DOMContentLoaded", function () {
-  const modal = document.getElementById("imgModal");
-  const modalImg = document.getElementById("modalImage");
-  const closeBtn = document.querySelector(".img-close");
-
-  // Select all certificate images
-  const images = document.querySelectorAll(".certificate-img");
-
-  images.forEach(img => {
-    img.style.cursor = "pointer";
-
-    img.addEventListener("click", function () {
-      modal.style.display = "flex";
-      modalImg.src = this.src;
-    });
-  });
-
-  // Close modal
-  closeBtn.onclick = () => modal.style.display = "none";
-
-  // Click outside image = close
-  modal.onclick = (e) => {
-    if (e.target === modal) {
-      modal.style.display = "none";
-    }
-  };
-});
-</script>
-<div id="imgModal" class="img-modal">
-  <span class="img-close">&times;</span>
-  <img class="img-modal-content" id="modalImage">
-</div>
-<header>
+<!-- ══════════════════════════════════════════
+     LEETCODE
+══════════════════════════════════════════ -->
+<section id="leetcode">
   <div class="container">
-    <h1>My Certificates</h1>
-    <p class="subtitle">Showcasing my professional and academic achievements</p>
-  </div>
-</header>
-
-<div class="container">
-
-  <div class="filter-bar">
-    <button class="filter-btn active" data-filter="all">All</button>
-    <button class="filter-btn" data-filter="professional">Professional</button>
-    <button class="filter-btn" data-filter="nptel">NPTEL</button>
-    <button class="filter-btn" data-filter="academic">Academic</button>
-    <button class="filter-btn" data-filter="intern">Internships</button>
-    <button class="filter-btn" data-filter="course">Courses</button>
-    <button class="filter-btn" data-filter="online">Udemy</button>
-    <button class="filter-btn" data-filter="hack">HackerRank</button>
-    <!-- <button class="filter-btn" data-filter="Wadhwani">Wadhwani</button> -->
-    <button class="filter-btn" data-filter="workshop">Workshops</button>
-    <button class="filter-btn" data-filter="sports">Sports</button>
-  </div>
-
-  <div class="certificates-grid">
-
-    <!-- Certificate Cards -->
-    {% for certificate in certificates %}
-    <div class="certificate-card"
-         data-category="{{ certificate.cataegory }}"
-         {% if forloop.counter > 6 %}style="display: none;"{% endif %}>
-
-      <img src="{% static certificate.image %}" alt="Certificate 1" class="certificate-img">
-
-      <div class="certificate-content">
-        <h3 class="certificate-title fw-bold text-center">{{ certificate.name }}</h3>
-        <span class="certificate-org">{{ certificate.institute }}</span>
-        <span class="certificate-date">Issued: {{ certificate.date }}</span>
-        <p class="certificate-desc">{{ certificate.description }}</p>
-
-        <div class="certificate-badges">
-          <span class="badge bg-warning text-dark">{{ certificate.badge }}</span>
-          <span class="badge bg-warning text-dark">{{ certificate.badge2 }}</span>
-        </div>
-
-        <!-- <a href="{{ certificate.link }}" class="view-btn">View Certificate</a> -->
-      </div>
-
+    <div class="sect-head reveal">
+      <div class="sect-eyebrow">Coding Grind</div>
+      <h2 class="sect-title">LeetCode Dashboard</h2>
     </div>
-    {% endfor %}
-
+    <div class="lc-grid">
+      <div class="lc-card glass reveal">
+        <h3>LeetCode Profile</h3>
+        <span class="lc-username">@Soumya_deep_saha</span>
+        <p style="color:var(--muted);font-size:13px;margin-bottom:20px;">Consistent problem-solver with a focus on algorithms & data structures.</p>
+        <a href="https://leetcode.com/u/Soumya_deep_saha/" target="_blank" class="lc-btn"><i class="fas fa-external-link-alt"></i> Visit Profile</a>
+      </div>
+      <div class="lc-card glass reveal">
+        <h3>Problems Solved</h3>
+        <div class="lc-stats">
+          <div class="lc-stat lc-easy"><span>Easy</span><b id="easy-count">—</b></div>
+          <div class="lc-stat lc-med"><span>Medium</span><b id="medium-count">—</b></div>
+          <div class="lc-stat lc-hard"><span>Hard</span><b id="hard-count">—</b></div>
+        </div>
+      </div>
+      <div class="lc-card glass reveal">
+        <h3>Consistency</h3>
+        <div class="lc-bar-wrap">
+          <p style="color:var(--muted);font-size:13px;">Overall completion rate</p>
+          <div class="lc-bar"><div class="lc-fill" id="lc-fill"></div></div>
+          <span class="lc-pct" id="lc-pct">Loading…</span>
+        </div>
+      </div>
+    </div>
   </div>
+</section>
 
-  {% if certificates|length > 6 %}
-  <div class="text-center mt-4">
-    <button id="show-more-btn" class="btn btn-primary">Show More Certificates</button>
-  </div>
-  {% endif %}
-
-</div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-
-  const filterBtns = document.querySelectorAll('.filter-btn');
-  const certificateCards = document.querySelectorAll('.certificate-card');
-  const showMoreBtn = document.getElementById('show-more-btn');
-  let isShowingAll = false;
-
-  // ================= SHOW MORE / LESS FUNCTION =================
-  if (showMoreBtn) {
-    showMoreBtn.addEventListener('click', function () {
-
-      const hiddenCards = document.querySelectorAll('.certificate-card[style="display: none;"]');
-
-      if (!isShowingAll) {
-        hiddenCards.forEach(card => {
-          card.style.display = 'block';
-        });
-        this.textContent = 'Show Less';
-        isShowingAll = true;
-
-      } else {
-        certificateCards.forEach((card, index) => {
-          if (index >= 6) {
-            card.style.display = 'none';
-          }
-        });
-        this.textContent = 'Show More Certificates';
-        isShowingAll = false;
-      }
-    });
-  }
-
-  // ================= FILTER FUNCTION =================
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', function () {
-
-      filterBtns.forEach(b => b.classList.remove('active'));
-      this.classList.add('active');
-
-      const filterValue = this.getAttribute('data-filter');
-
-      certificateCards.forEach((card, index) => {
-
-        if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
-          card.style.display = 'block';
-
-          if (!isShowingAll && index >= 6) {
-            card.style.display = 'none';
-          }
-
-        } else {
-          card.style.display = 'none';
-        }
-      });
-
-      if (showMoreBtn) {
-        const visibleCount = document.querySelectorAll('.certificate-card[style="display: block;"]').length;
-        showMoreBtn.style.display = (visibleCount >= 6) ? 'inline-block' : 'none';
-      }
-    });
-  });
-
-});
-</script>
-
-<!-- ********************************************************************************** -->
-<!-- ACHIEVEMENTS / CERTIFICATES END -->
-<!-- ********************************************************************************** -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- *************************************************************************** -->
-<!-- PROJECTS START -->
-<!-- *************************************************************************** -->
-
-<style>
-  .web-btn {
-    display: inline-block;
-    padding: 5px 20px;
-    font-size: 16px;
-    font-weight: 600;
-    text-decoration: none;
-    color: #000000;
-    background-color: #ffffff;
-    border-radius: 50px;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
-  }
-
-  .web-btn:hover {
-    background-color: #0056b3;
-    color: #fff;
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(0, 86, 179, 0.4);
-  }
-
-  .card {
-    cursor: pointer;
-  }
-</style>
-
-<header class="mt-5">
+<!-- ══════════════════════════════════════════
+     CERTIFICATES
+══════════════════════════════════════════ -->
+<section id="certs">
   <div class="container">
-    <h1>My Projects</h1>
+    <div class="sect-head reveal">
+      <div class="sect-eyebrow">Credentials</div>
+      <h2 class="sect-title">My Certificates</h2>
+    </div>
+
+    <div class="filter-row reveal">
+      <button class="f-btn active" data-filter="all">All</button>
+      <button class="f-btn" data-filter="professional">Professional</button>
+      <button class="f-btn" data-filter="nptel">NPTEL</button>
+      <button class="f-btn" data-filter="academic">Academic</button>
+      <button class="f-btn" data-filter="intern">Internships</button>
+      <button class="f-btn" data-filter="course">Courses</button>
+      <button class="f-btn" data-filter="online">Udemy</button>
+      <button class="f-btn" data-filter="hack">HackerRank</button>
+      <button class="f-btn" data-filter="workshop">Workshops</button>
+      <button class="f-btn" data-filter="sports">Sports</button>
+    </div>
+
+    <div class="certs-grid" id="certsGrid">
+      {% for certificate in certificates %}
+      <div class="cert-card glass" data-category="{{ certificate.cataegory }}" {% if forloop.counter > 6 %}style="display:none"{% endif %}>
+        <div class="cert-img-wrap">
+          <img src="{% static certificate.image %}" alt="{{ certificate.name }}" class="lb-trigger"/>
+        </div>
+        <div class="cert-body">
+          <h3>{{ certificate.name }}</h3>
+          <span class="cert-org">{{ certificate.institute }}</span>
+          <span class="cert-date">Issued: {{ certificate.date }}</span>
+          <p class="cert-desc">{{ certificate.description }}</p>
+          <div class="cert-tags">
+            <span class="cert-tag">{{ certificate.badge }}</span>
+            {% if certificate.badge2 %}<span class="cert-tag">{{ certificate.badge2 }}</span>{% endif %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    {% if certificates|length > 6 %}
+    <button class="show-more-btn" id="showMoreBtn">Show More Certificates</button>
+    {% endif %}
   </div>
-</header>
+</section>
 
-<div class="my-5" id="blogs" style="width: 90%; margin: auto; border-radius: 10px">
-
-  <div class="row mt-5">
-
-    <!-- ================= PROJECT CARDS ================= -->
-    {% for project in projects %}
-    <div class="col-lg-3 col-md-6 mb-4">
-      <div class="card blog-card">
-        <img src="{% static project.project_path %}" alt="Blog Image" />
-
-        <div class="blog-content">
-          <h5 class="blog-title text-center fs-4">{{ project.title }}</h5>
-
-          <a href="{{ project.linkto }}"
-             class="btn web-btn"
-             data-bs-toggle="modal"
-             data-bs-target="{{ project.linkto }}">
-            Read More →
+<!-- ══════════════════════════════════════════
+     PROJECTS
+══════════════════════════════════════════ -->
+<section id="projects">
+  <div class="container">
+    <div class="sect-head reveal">
+      <div class="sect-eyebrow">My Work</div>
+      <h2 class="sect-title">Projects</h2>
+    </div>
+    <div class="projects-grid">
+      {% for project in projects %}
+      <div class="proj-card glass reveal">
+        <div class="proj-img-wrap">
+          <img src="{% static project.project_path %}" alt="{{ project.title }}"/>
+        </div>
+        <div class="proj-body">
+          <h5>{{ project.title }}</h5>
+          <a href="{{ project.linkto }}" class="proj-btn" data-bs-toggle="modal" data-bs-target="{{ project.linkto }}">
+            View Details <i class="fas fa-arrow-right"></i>
           </a>
         </div>
-
       </div>
+      {% endfor %}
     </div>
-    {% endfor %}
-
-    <!-- ================= WEB DEVELOPMENT MODAL ================= -->
-    <div class="modal fade" id="webDevModal" tabindex="-1" aria-labelledby="webDevModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-
-          <div class="modal-header">
-            <h5 class="modal-title fw-bold" id="webDevModalLabel">Web Development Projects</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-
-          <div class="modal-body">
-            <div class="row">
-              {% for webdevproject in webdevprojects %}
-              <div class="col-md-4 mb-3">
-                <a href="{{ webdevproject.link }}" class="text-decoration-none">
-                  <div class="card" id="cardpro">
-                    <img src="{% static webdevproject.project_path %}" class="card-img-top" alt="Project 1">
-                    <div class="card-body">
-                      <h5 class="card-title fw-bold text-center">{{ webdevproject.projectname }}</h5>
-                    </div>
-                  </div>
-                </a>
-              </div>
-              {% endfor %}
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-
-    <!-- ================= ANDROID / IOS MODAL ================= -->
-    <div class="modal fade" id="appDevModal" tabindex="-1" aria-labelledby="appDevModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-
-          <div class="modal-header">
-            <h5 class="modal-title fw-bold" id="webDevModalLabel">Android/IOS Development Projects</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-
-          <div class="modal-body" id="pythonmodelbody">
-            <div class="row">
-              {% for appdevproject in appdevprojects %}
-              <div class="col-md-4 mb-3">
-                <a href="" class="text-decoration-none" download="{{ appdevproject.projectname }}.apk">
-                  <div class="card" id="cardapp">
-                    <img src="{% static appdevproject.project_path %}" class="card-img-top" alt="Project 1">
-                    <div class="card-body">
-                      <h5 class="card-title fw-bold text-center">{{ appdevproject.projectname }}</h5>
-                    </div>
-                  </div>
-                </a>
-              </div>
-              {% endfor %}
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-
-    <!-- ================= PYTHON / AI MODAL ================= -->
-    <div class="modal fade" id="pythonDevModal" tabindex="-1" aria-labelledby="webDevModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-
-          <div class="modal-header">
-            <h5 class="modal-title fw-bold" id="webDevModalLabel">Python/Machine Learning/AI Projects</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-
-          <div class="modal-body">
-            <div class="row">
-              {% for pythondevproject in pythondevprojects %}
-              <div class="col-md-4 mb-3">
-                <a href="{{ pythondevproject.link }}" class="text-decoration-none">
-                  <div class="card" id="cardpro">
-                    <img src="{% static pythondevproject.project_path %}" class="card-img-top" alt="Project 1">
-                    <div class="card-body">
-                      <h5 class="card-title fw-bold text-center">{{ pythondevproject.projectname }}</h5>
-                    </div>
-                  </div>
-                </a>
-              </div>
-              {% endfor %}
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-
-    <!-- ================= UI/UX MODAL ================= -->
-    <div class="modal fade" id="uxuiDevModal" tabindex="-1" aria-labelledby="webDevModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-
-          <div class="modal-header">
-            <h5 class="modal-title fw-bold" id="webDevModalLabel">UI/UX Projects</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-
-          <div class="modal-body">
-            <div class="row">
-              {% for uiuxproject in uiuxprojects %}
-              <div class="col-md-4 mb-3">
-                <a href="" class="text-decoration-none">
-                  <div class="card" id="cardpro">
-                    <img src="{% static uiuxproject.project_path %}" class="card-img-top" alt="Project 1">
-                    <div class="card-body">
-                      <h5 class="card-title fw-bold text-center">{{ uiuxproject.projectname }}</h5>
-                    </div>
-                  </div>
-                </a>
-              </div>
-              {% endfor %}
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-
   </div>
-</div>
-
-<!-- *************************************************************************** -->
-<!-- PROJECTS END -->
-<!-- *************************************************************************** -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- ************************************************************** -->
-<!-- BLOG START -->
-<!-- ************************************************************** -->
-
-<header class="mt-5">
-  <div class="container">
-    <h1>Check Blogs</h1>
-  </div>
-</header>
-
-<div class="my-5" id="blogs" style="width: 90%; margin: auto; border-radius: 10px">
-
-  <div class="row">
-
-    <!-- ================= BLOG CARDS ================= -->
-    {% for blog in blogs %}
-    <div class="col-lg-3 col-md-6 mb-4">
-      <div class="card blog-card">
-
-        <img src="{% static blog.image %}" alt="Blog Image" />
-
-        <div class="blog-content">
-          <h5 class="blog-title">{{ blog.name }}</h5>
-
-          <small class="text-muted d-block mb-2">
-            🗓️ {{ blog.date|date:"F d, Y" }}
-          </small>
-
-          <p class="text-muted">{{ blog.description }}</p>
-
-          <a href="{{ blog.link }}" class="blog-btn">More Info</a>
-        </div>
-
-      </div>
-    </div>
-    {% endfor %}
-
-  </div>
-</div>
-
-<!-- ************************************************************** -->
-<!-- BLOG END -->
-<!-- ************************************************************** -->
-
-
-
-
-
-
-<!-- ********************************************************************************** -->
-<!-- CONTACT SECTION START -->
-<!-- ********************************************************************************** -->
-
-<section id="contact" class="container">
-
-  <div class="text-center mb-4">
-    <h2 class="text-white fw-bold">Get in Touch</h2>
-    <p class="text-white">
-      Feel free to reach out for collaborations or just a friendly hello!
-    </p>
-  </div>
-
-  <div class="row">
-
-    <!-- ================= CONTACT FORM ================= -->
-    <div class="col-lg-6">
-      <form>
-
-        <div class="mb-3">
-          <label for="name" class="form-label text-white">Full Name</label>
-          <input type="text" class="form-control" id="name" placeholder="Enter your name" required />
-        </div>
-
-        <div class="mb-3">
-          <label for="email" class="form-label text-white">Email Address</label>
-          <input type="email" class="form-control" id="email" placeholder="Enter your email" required />
-        </div>
-
-        <div class="mb-3">
-          <label for="message" class="form-label text-white">Message</label>
-          <textarea class="form-control" id="message" rows="4" placeholder="Write your message" required></textarea>
-        </div>
-
-        <button type="submit" class="btn btn-primary w-100">
-          Send Message
-        </button>
-
-      </form>
-    </div>
-
-    <!-- ================= CONTACT INFO ================= -->
-    <div class="col-lg-6">
-
-      <div class="contact-info d-flex align-items-center mb-3">
-        <i class="bx bx-map bx-md me-3"></i>
-        <p class="text-white">Kolkata, India</p>
-      </div>
-
-      <div class="contact-info d-flex align-items-center mb-3">
-        <i class="bx bx-envelope bx-md me-3"></i>
-        <p class="text-white">deepadiotic@gmail.com / soumyadeepsaha400@gmail.com</p>
-      </div>
-
-      <div class="contact-info d-flex align-items-center mb-3">
-        <i class="bx bx-phone bx-md me-3"></i>
-        <p class="text-white">+91 6291307445</p>
-      </div>
-
-    
-
-    </div>
-
-  </div>
-
 </section>
 
-<!-- ********************************************************************************** -->
-<!-- CONTACT SECTION END -->
-<!-- ********************************************************************************** -->
-</body>
+<!-- PROJECT MODALS -->
+<div class="modal fade" id="webDevModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Web Development Projects</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row g-3">
+          {% for p in webdevprojects %}
+          <div class="col-md-4">
+            <a href="{{ p.link }}" class="proj-modal-card">
+              <img src="{% static p.project_path %}" alt="{{ p.projectname }}"/>
+              <p>{{ p.projectname }}</p>
+            </a>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
+<div class="modal fade" id="appDevModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Android / iOS Projects</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row g-3">
+          {% for p in appdevprojects %}
+          <div class="col-md-4">
+            <a href="" download="{{ p.projectname }}.apk" class="proj-modal-card">
+              <img src="{% static p.project_path %}" alt="{{ p.projectname }}"/>
+              <p>{{ p.projectname }}</p>
+            </a>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="pythonDevModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Python / AI / ML Projects</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row g-3">
+          {% for p in pythondevprojects %}
+          <div class="col-md-4">
+            <a href="{{ p.link }}" class="proj-modal-card">
+              <img src="{% static p.project_path %}" alt="{{ p.projectname }}"/>
+              <p>{{ p.projectname }}</p>
+            </a>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="uxuiDevModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">UI / UX Projects</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row g-3">
+          {% for p in uiuxprojects %}
+          <div class="col-md-4">
+            <a href="" class="proj-modal-card">
+              <img src="{% static p.project_path %}" alt="{{ p.projectname }}"/>
+              <p>{{ p.projectname }}</p>
+            </a>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     BLOG
+══════════════════════════════════════════ -->
+<section id="blogs">
+  <div class="container">
+    <div class="sect-head reveal">
+      <div class="sect-eyebrow">Thoughts & Writes</div>
+      <h2 class="sect-title">Blog</h2>
+    </div>
+    <div class="blog-grid">
+      {% for blog in blogs %}
+      <div class="blog-card glass reveal">
+        <div class="blog-img-wrap">
+          <img src="{% static blog.image %}" alt="{{ blog.name }}"/>
+        </div>
+        <div class="blog-body">
+          <span class="blog-date">🗓 {{ blog.date|date:"F d, Y" }}</span>
+          <h5>{{ blog.name }}</h5>
+          <p class="blog-desc">{{ blog.description }}</p>
+          <a href="{{ blog.link }}" class="blog-btn">Read More <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     CONTACT
+══════════════════════════════════════════ -->
+<section id="contact">
+  <div class="container">
+    <div class="sect-head reveal">
+      <div class="sect-eyebrow">Let's Connect</div>
+      <h2 class="sect-title">Get in Touch</h2>
+      <p class="sect-sub">Open to collaborations, freelance work, and just a friendly hello.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-form-wrap glass reveal">
+        <form>
+          <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" class="cyber-input" placeholder="Your name"/>
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" class="cyber-input" placeholder="you@email.com"/>
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea class="cyber-input" rows="5" placeholder="Your message…"></textarea>
+          </div>
+          <button type="submit" class="btn-primary-cyber" style="width:100%;justify-content:center;border:none;cursor:pointer;">
+            <i class="fas fa-paper-plane"></i> Send Message
+          </button>
+        </form>
+      </div>
+
+      <div class="contact-info-wrap reveal">
+        <div class="cinfo-card"><div class="cinfo-icon"><i class="fas fa-map-marker-alt"></i></div><div class="cinfo-text">Kolkata, West Bengal, India</div></div>
+        <div class="cinfo-card"><div class="cinfo-icon"><i class="fas fa-envelope"></i></div><div class="cinfo-text">deepadiotic@gmail.com<br/>soumyadeepsaha400@gmail.com</div></div>
+        <div class="cinfo-card"><div class="cinfo-icon"><i class="fas fa-phone"></i></div><div class="cinfo-text">+91 6291307445</div></div>
+        <div class="cinfo-card"><div class="cinfo-icon"><i class="fab fa-github"></i></div><div class="cinfo-text"><a href="https://github.com/SoumyaDeepSaha1200" target="_blank" style="color:var(--cyan);text-decoration:none;">github.com/SoumyaDeepSaha1200</a></div></div>
+        <div class="cinfo-card"><div class="cinfo-icon"><i class="fab fa-linkedin"></i></div><div class="cinfo-text"><a href="https://www.linkedin.com/in/soumya-deep-saha-579a73222/" target="_blank" style="color:var(--cyan);text-decoration:none;">LinkedIn Profile</a></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  © 2025 <span>SOUMYA DEEP SAHA</span> &nbsp;·&nbsp; All Systems Operational &nbsp;·&nbsp; Built with ❤️ & Django
+</footer>
+
+<!-- BOOTSTRAP JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+/* ── MATRIX RAIN ── */
+const canvas = document.getElementById('rain');
+const ctx = canvas.getContext('2d');
+function rsz() { canvas.width = innerWidth; canvas.height = innerHeight; }
+rsz(); window.addEventListener('resize', rsz);
+const chars = '01アイウエオカキクケコサシスセソ'; const fs = 13;
+let drops = [];
+function initDrops() { drops = Array.from({length: Math.floor(canvas.width/fs)}, () => Math.random()*canvas.height/fs); }
+initDrops(); window.addEventListener('resize', initDrops);
+setInterval(() => {
+  ctx.fillStyle = 'rgba(5,8,16,0.06)'; ctx.fillRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle = 'rgba(0,230,255,0.7)'; ctx.font = `${fs}px 'JetBrains Mono'`;
+  drops.forEach((d,i) => {
+    ctx.fillText(chars[Math.floor(Math.random()*chars.length)], i*fs, d*fs);
+    if(d*fs > canvas.height && Math.random() > 0.975) drops[i] = 0;
+    drops[i] += 0.6;
+  });
+}, 45);
+
+/* ── CLOCK ── */
+function tick() {
+  const n = new Date(), p = x => String(x).padStart(2,'0');
+  document.getElementById('liveTime').textContent = `${p(n.getHours())}:${p(n.getMinutes())}:${p(n.getSeconds())}`;
+}
+tick(); setInterval(tick, 1000);
+
+/* ── NAVBAR ── */
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => { navbar.classList.toggle('scrolled', scrollY > 40); });
+document.getElementById('navToggle').addEventListener('click', () => {
+  document.getElementById('navLinks').classList.toggle('open');
+});
+
+/* ── TYPEWRITER ── */
+const texts = ["Software Engineer","Full-Stack Web Developer","AI & ML Enthusiast","MERN Stack Developer","Tech Blogger","Photography Enthusiast"];
+let ti=0, idx=0, cur='', del=false;
+(function type() {
+  const t = texts[ti];
+  cur = del ? t.slice(0,--idx) : t.slice(0,++idx);
+  document.getElementById('typing-effect').textContent = cur + '█';
+  let spd = del ? 50 : 100;
+  if(!del && cur===t){ spd=2000; del=true; }
+  else if(del && cur===''){ del=false; ti=(ti+1)%texts.length; spd=400; }
+  setTimeout(type, spd);
+})();
+
+/* ── BANNER TYPEWRITER (NAME) ── */
+const nameEl = document.getElementById('bannerName');
+const fullName = "SOUMYA DEEP SAHA";
+let ni = 0;
+(function typeName() {
+  nameEl.textContent = fullName.slice(0,ni) + (ni<fullName.length?'█':'');
+  if(ni++ <= fullName.length) setTimeout(typeName, 90 + Math.random()*50);
+})();
+
+/* ── CURSOR ── */
+const dot = document.getElementById('cur-dot'), ring = document.getElementById('cur-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove', e=>{ mx=e.clientX; my=e.clientY; dot.style.left=mx+'px'; dot.style.top=my+'px'; });
+(function ar(){ rx+=(mx-rx)*.1; ry+=(my-ry)*.1; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(ar); })();
+document.querySelectorAll('a,button,.f-btn,.soc-btn').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ ring.style.width='50px'; ring.style.height='50px'; ring.style.borderColor='rgba(0,230,255,.8)'; });
+  el.addEventListener('mouseleave',()=>{ ring.style.width='34px'; ring.style.height='34px'; ring.style.borderColor='rgba(0,230,255,.5)'; });
+});
+
+/* ── SCROLL REVEAL ── */
+const revealEls = document.querySelectorAll('.reveal');
+const ro = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      e.target.style.transition = 'opacity .7s ease, transform .7s ease';
+      e.target.style.opacity = '1'; e.target.style.transform = 'translateY(0)';
+      ro.unobserve(e.target);
+    }
+  });
+}, {threshold: 0.1});
+revealEls.forEach(el => ro.observe(el));
+
+/* ── SKILL BARS (on scroll) ── */
+const skillObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      e.target.querySelectorAll('.skill-fill').forEach(bar => {
+        bar.style.width = bar.dataset.w + '%';
+      });
+      skillObs.unobserve(e.target);
+    }
+  });
+}, {threshold: 0.3});
+document.querySelectorAll('.skills-grid').forEach(g => skillObs.observe(g));
+
+/* ── LEETCODE DASHBOARD ── */
+async function fetchLC() {
+  try {
+    const r = await fetch("https://leetcode-api-faisalshohag.vercel.app/Soumya_deep_saha");
+    const d = await r.json();
+    document.getElementById('easy-count').textContent = d.easySolved;
+    document.getElementById('medium-count').textContent = d.mediumSolved;
+    document.getElementById('hard-count').textContent = d.hardSolved;
+    const pct = Math.round((d.totalSolved / d.totalQuestions) * 100);
+    setTimeout(() => { document.getElementById('lc-fill').style.width = pct + '%'; }, 400);
+    document.getElementById('lc-pct').textContent = pct + '% Completed';
+  } catch { document.getElementById('lc-pct').textContent = 'Unable to load data'; }
+}
+fetchLC();
+
+/* ── LIGHTBOX ── */
+const lb = document.getElementById('lightbox'), lbImg = document.getElementById('lbImg');
+document.querySelectorAll('.lb-trigger').forEach(img => {
+  img.addEventListener('click', () => { lbImg.src = img.src; lb.classList.add('on'); });
+});
+document.getElementById('lbClose').addEventListener('click', () => lb.classList.remove('on'));
+lb.addEventListener('click', e => { if(e.target===lb) lb.classList.remove('on'); });
+
+/* ── CERTIFICATES FILTER ── */
+const cards = document.querySelectorAll('.cert-card');
+const showMore = document.getElementById('showMoreBtn');
+let showing = false;
+
+document.querySelectorAll('.f-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.f-btn').forEach(b=>b.classList.remove('active'));
+    this.classList.add('active');
+    const f = this.dataset.filter;
+    let v = 0;
+    cards.forEach((c,i) => {
+      const match = f==='all' || c.dataset.category===f;
+      if(match && (showing || v < 6)) { c.style.display=''; v++; }
+      else { c.style.display='none'; }
+    });
+    if(showMore) showMore.style.display = (v >= 6 && !showing) ? 'block' : 'none';
+  });
+});
+
+if(showMore) {
+  showMore.addEventListener('click', () => {
+    showing = !showing;
+    const active = document.querySelector('.f-btn.active').dataset.filter;
+    cards.forEach((c,i) => {
+      const match = active==='all' || c.dataset.category===active;
+      if(match) c.style.display = '';
+      else c.style.display = 'none';
+    });
+    showMore.textContent = showing ? 'Show Less' : 'Show More Certificates';
+  });
+}
+
+/* ── ACTIVE NAV ── */
+const sections = document.querySelectorAll('section[id]');
+const navAs = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let cur = '';
+  sections.forEach(s => { if(scrollY >= s.offsetTop - 120) cur = s.id; });
+  navAs.forEach(a => { a.classList.toggle('active', a.getAttribute('href') === '#'+cur); });
+});
+</script>
+</body>
 </html>
