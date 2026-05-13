@@ -660,75 +660,51 @@
     <!-- GRID -->
     <div class="pricing-grid">
 
-      <div class="pricing-card" onclick="showService('web')">
-        <div class="card-icon">🌐</div>
-        <h2>Web Services</h2>
-        <p class="card-desc">Beautiful, responsive websites that convert visitors into customers.</p>
-        <div class="price-row">
-          <p class="price" data-month="99" data-year="79">$99</p>
-          <span class="price-per">/mo</span>
-        </div>
-        <p class="price-original" data-month="" data-year="$99"><!-- yearly original --></p>
-        <button class="btn btn-ghost">Explore Plans →</button>
-        <ul class="feature-list">
-          <li>Website Design & Development</li>
-          <li>Responsive UI/UX</li>
-          <li>SEO-Ready Structure</li>
-        </ul>
-      </div>
+{% for category in categories %}
 
-      <div class="pricing-card" onclick="showService('photo')">
-        <div class="card-icon">📸</div>
-        <h2>Photography</h2>
-        <p class="card-desc">Professional shoots and expert post-processing for your brand.</p>
-        <div class="price-row">
-          <p class="price" data-month="49" data-year="39">$49</p>
-          <span class="price-per">/mo</span>
-        </div>
-        <p class="price-original" data-month="" data-year="$49"><!-- yearly original --></p>
-        <button class="btn btn-ghost">Explore Plans →</button>
-        <ul class="feature-list">
-          <li>HD Professional Shoot</li>
-          <li>Expert Photo Editing</li>
-          <li>Fast 48h Delivery</li>
-        </ul>
-      </div>
+<div class="pricing-card {% if category.key == 'seo' %}featured{% endif %}"
+     onclick="showService('{{ category.key }}')">
 
-      <div class="pricing-card featured" onclick="showService('seo')">
-        <div class="card-icon">🚀</div>
-        <h2>SEO Optimization</h2>
-        <p class="card-desc">Dominate search results and drive organic traffic consistently.</p>
-        <div class="price-row">
-          <p class="price" data-month="79" data-year="59">$79</p>
-          <span class="price-per">/mo</span>
-        </div>
-        <p class="price-original" data-month="" data-year="$79"><!-- yearly original --></p>
-        <button class="btn btn-primary">Explore Plans →</button>
-        <ul class="feature-list">
-          <li>Deep Keyword Research</li>
-          <li>Ranking Boost Strategy</li>
-          <li>Monthly Reports</li>
-        </ul>
-      </div>
+    <div class="card-icon">{{ category.icon }}</div>
 
-      <div class="pricing-card" onclick="showService('app')">
-        <div class="card-icon">📱</div>
-        <h2>App Development</h2>
-        <p class="card-desc">Native Android & iOS apps with powerful backend infrastructure.</p>
-        <div class="price-row">
-          <p class="price" data-month="199" data-year="149">$199</p>
-          <span class="price-per">/mo</span>
-        </div>
-        <p class="price-original" data-month="" data-year="$199"><!-- yearly original --></p>
-        <button class="btn btn-ghost">Explore Plans →</button>
-        <ul class="feature-list">
-          <li>Android & iOS Apps</li>
-          <li>Backend API & Cloud</li>
-          <li>Full UI/UX Design</li>
-        </ul>
-      </div>
+    <h2>{{ category.title }}</h2>
 
+    <p class="card-desc">
+        {{ category.description }}
+    </p>
+
+    <div class="price-row">
+        <p class="price"
+           data-month="{{ category.monthly_price }}"
+           data-year="{{ category.yearly_price }}">
+           ${{ category.monthly_price }}
+        </p>
+
+        <span class="price-per">/mo</span>
     </div>
+
+    <p class="price-original"
+       data-month=""
+       data-year="${{ category.monthly_price }}">
+    </p>
+
+    <button class="btn {% if category.button_type == 'primary' %}btn-primary{% else %}btn-ghost{% endif %}">
+        Explore Plans →
+    </button>
+
+    <ul class="feature-list">
+
+        {% for plan in category.plans.all|slice:":3" %}
+            <li>{{ plan.perk1 }}</li>
+        {% endfor %}
+
+    </ul>
+
+</div>
+
+{% endfor %}
+
+</div>
 
     <!-- TRUST BAR -->
     <div class="trust-bar">
@@ -769,87 +745,32 @@
 <script>
 /* ── SERVICE DATA ── */
 const services = {
-  web: [
-    {
-      name: "Portfolio Website", price: "$99", tier: "starter",
-      tag: "Starter", emoji: "🎨",
-      perks: ["Up to 5 Pages", "Mobile Responsive", "Basic SEO"],
-      img: "/static/images/web1.jpg"
-    },
-    {
-      name: "Business Website", price: "$199", tier: "pro",
-      tag: "Pro", emoji: "💼",
-      perks: ["Up to 15 Pages", "CMS Integration", "Advanced SEO"],
-      img: "/static/images/web2.jpg"
-    },
-    {
-      name: "E-Commerce Store", price: "$399", tier: "enterprise",
-      tag: "Enterprise", emoji: "🛒",
-      perks: ["Unlimited Products", "Payment Gateway", "Analytics Dashboard"],
-      img: "/static/images/web3.jpg"
-    }
-  ],
-  photo: [
-    {
-      name: "Basic Shoot", price: "$49", tier: "starter",
-      tag: "Starter", emoji: "📷",
-      perks: ["2h Session", "20 Edited Photos", "Digital Delivery"],
-      img: "/static/images/photo1.jpg"
-    },
-    {
-      name: "Event Shoot", price: "$149", tier: "pro",
-      tag: "Pro", emoji: "🎉",
-      perks: ["Full Day Coverage", "100+ Edited Photos", "Online Gallery"],
-      img: "/static/images/photo2.jpg"
-    },
-    {
-      name: "Premium Shoot", price: "$299", tier: "enterprise",
-      tag: "Enterprise", emoji: "🏆",
-      perks: ["Multi-Day Shoots", "Unlimited Photos", "Priority Editing"],
-      img: "/static/images/photo3.jpg"
-    }
-  ],
-  seo: [
-    {
-      name: "Starter SEO", price: "$79", tier: "starter",
-      tag: "Starter", emoji: "🌱",
-      perks: ["10 Keywords", "On-Page Optimization", "Monthly Report"],
-      img: "/static/images/seo1.jpg"
-    },
-    {
-      name: "Advanced SEO", price: "$149", tier: "pro",
-      tag: "Pro", emoji: "📈",
-      perks: ["50 Keywords", "Backlink Building", "Weekly Reports"],
-      img: "/static/images/seo2.jpg"
-    },
-    {
-      name: "Pro SEO", price: "$299", tier: "enterprise",
-      tag: "Enterprise", emoji: "⚡",
-      perks: ["Unlimited Keywords", "Competitor Analysis", "Dedicated Manager"],
-      img: "/static/images/seo3.jpg"
-    }
-  ],
-  app: [
-    {
-      name: "Basic App", price: "$199", tier: "starter",
-      tag: "Starter", emoji: "📲",
-      perks: ["Single Platform", "Core Features", "3 Month Support"],
-      img: "/static/images/app1.jpg"
-    },
-    {
-      name: "Business App", price: "$499", tier: "pro",
-      tag: "Pro", emoji: "🏢",
-      perks: ["Android + iOS", "Backend Integration", "6 Month Support"],
-      img: "/static/images/app2.jpg"
-    },
-    {
-      name: "Enterprise App", price: "$999", tier: "enterprise",
-      tag: "Enterprise", emoji: "🌐",
-      perks: ["Custom Architecture", "API & Cloud Infra", "12 Month Support"],
-      img: "/static/images/app3.jpg"
-    }
-  ]
+    {% for category in categories %}
+    "{{ category.key }}": [
+
+        {% for plan in category.plans.all %}
+        {
+            name: "{{ plan.name }}",
+            price: "{{ plan.price }}",
+            tier: "{{ plan.tier }}",
+            tag: "{{ plan.tag }}",
+            emoji: "{{ plan.emoji }}",
+
+            perks: [
+                "{{ plan.perk1 }}",
+                "{{ plan.perk2 }}",
+                "{{ plan.perk3 }}"
+            ],
+
+            img: "{{ plan.image.url }}"
+        },
+        {% endfor %}
+
+    ],
+    {% endfor %}
 };
+
+
 
 const typeTitles = {
   web: "Web", photo: "Photography", seo: "SEO", app: "App Dev"

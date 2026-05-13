@@ -215,3 +215,48 @@ class blog(models.Model):
         return f"images/{self.image}"
 
 
+
+
+class ServiceCategory(models.Model):
+    CATEGORY_CHOICES = [
+        ('web', 'Web Services'),
+        ('seo', 'SEO'),
+        ('photo', 'Photography'),
+        ('app', 'App Development'),
+    ]
+
+    key = models.CharField(max_length=50, choices=CATEGORY_CHOICES, unique=True)
+    title = models.CharField(max_length=100)
+    icon = models.CharField(max_length=20)
+    description = models.TextField()
+    monthly_price = models.IntegerField()
+    yearly_price = models.IntegerField()
+    button_type = models.CharField(max_length=20, default="ghost")
+
+    def __str__(self):
+        return self.title
+
+
+class ServicePlan(models.Model):
+    TIER_CHOICES = [
+        ('starter', 'Starter'),
+        ('pro', 'Pro'),
+        ('enterprise', 'Enterprise'),
+    ]
+
+    category = models.ForeignKey(ServiceCategory, on_delete=models.CASCADE, related_name='plans')
+
+    name = models.CharField(max_length=100)
+    price = models.CharField(max_length=20)
+    tier = models.CharField(max_length=20, choices=TIER_CHOICES)
+    tag = models.CharField(max_length=50)
+    emoji = models.CharField(max_length=20)
+
+    image = models.ImageField(upload_to='services/')
+    
+    perk1 = models.CharField(max_length=200)
+    perk2 = models.CharField(max_length=200)
+    perk3 = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name

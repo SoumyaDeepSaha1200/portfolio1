@@ -30,7 +30,10 @@ def home(request):
     return render(request, 'home.html', {'images': images,'cards': cards,'projects':projects,'webdevprojects':webdevprojects,'appdevprojects':appdevprojects,'pythondevprojects':pythondevprojects,'uiuxprojects':uiuxprojects,'achivementcardmodels':achivementcardmodels,'achivementcards':achivementcards,'certificates':certificates,'blogs': blogs})
 
 def codesence(request):
-    return render(request, 'codesence.html')
+    categories = ServiceCategory.objects.prefetch_related('plans').all()
+    return render(request, 'codesence.html', {
+        'categories': categories
+    })
 
 def shop(request):
     return render(request, 'home.html')
