@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Soumya Deep Saha — Dev</title>
-  <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+  <link rel="shortcut icon" href="{% static 'images/logo.png' %}" type="image/x-icon">
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
@@ -240,7 +240,7 @@
     .tagline {
       font-size: 16px;
       font-weight: 300;
-      color: var(--dim);
+      color: white;
       max-width: 520px;
       margin: 0 auto 36px;
       line-height: 1.7;
@@ -420,7 +420,23 @@
       <span class="role-divider">◈</span>
       <span class="role-badge pink">SOFTWARE ENGINEER</span>
     </div>
+ <img src="{% static 'images/Logo.png' %}" alt="Profile Image" class="profile-logo">
+ <style>
+  .profile-logo{
+    margin: 0 auto 20px;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;  
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    transition: 0.3s ease;
+}
 
+.profile-logo:hover{
+    transform: scale(1.05);
+}
+ </style>
+    
     <p class="tagline" style="opacity:0" id="tagline">
       Transforming ideas into immersive digital experiences — through innovative code, creative problem-solving, and a relentless pursuit of pixel-perfect execution.
     </p>

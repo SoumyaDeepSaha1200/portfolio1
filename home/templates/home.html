@@ -5,7 +5,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Soumya Deep Saha — Portfolio</title>
-  <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon"/>
+  <link rel="shortcut icon" href="{% static 'images/logo.png' %}" type="image/x-icon"/>
 
   <!-- FONTS -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
@@ -594,6 +594,22 @@
     </div>
 
     <h1 id="bannerName"></h1>
+     <img src="{% static 'images/Logo.png' %}" alt="Profile Image" class="profile-logo">
+ <style>
+    .profile-logo{
+    margin: 0 auto 20px;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;  
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    transition: 0.3s ease;
+}
+
+.profile-logo:hover{
+    transform: scale(1.05);
+}
+ </style>
 
     <div class="banner-role">
       <span class="role-pill">Web Developer</span>
